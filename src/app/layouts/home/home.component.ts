@@ -17,8 +17,10 @@ export class HomeComponent {
   ){}
 
   ngOnInit(){
-    this.moviesService.getAll().subscribe((movie) => { console.log(movie); });
-    this.moviesService.getNovedades().subscribe((movies) => { console.log(movies); });
+    this.moviesService.getNovedades().subscribe((movies: any) => { 
+      this.movies = movies;
+      console.log(movies); 
+    });
     this.moviesService.get('101').subscribe((movie) => { console.log(movie); });
     
   }

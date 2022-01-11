@@ -25,7 +25,8 @@ import {MatCardModule} from '@angular/material/card';
       MenuComponent,
       BarraLateralComponent,
       FooterComponent,
-      HttpClientModule
+      HttpClientModule,
+      CommonModule,
     ]
 })
 export class GlobalModule { }

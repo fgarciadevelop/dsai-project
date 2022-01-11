@@ -11,9 +11,11 @@
             .novedades-catalogo{
 
                 .peliculas-nuevas{
-                    display: flex;
+                    display: block;
                     background-color: gray;
-
+                    .peliculas{
+                        display: flex;
+                    }
                 }
                 .series-nuevas{
                     display: flex;
