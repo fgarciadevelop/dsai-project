@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-serie',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SerieComponent implements OnInit {
 
-  constructor() { }
+  public idSerie: string = '';
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+
+    this.idSerie = this.router.url.split('/')[2];
+    console.log(this.idSerie);
+    
   }
 
 }

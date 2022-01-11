@@ -4,6 +4,7 @@ import { GlobalModule } from "../shared/global.module";
 import { CoreComponent } from "./core/core.component";
 import { HomeComponent } from "./home/home.component";
 import { MovieComponent } from "./movie/movie.component";
+import { SerieComponent } from "./serie/serie.component";
 
 const routes: Routes = [
 
@@ -13,7 +14,10 @@ const routes: Routes = [
 
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path: 'home/:id', component: HomeComponent },
-        { path: 'movies', component: MovieComponent },
+        { path: 'peliculas', component: MovieComponent },
+        { path: 'peliculas/:id', component: MovieComponent },
+        { path: 'series', component: SerieComponent },
+        { path: 'series/:id', component: SerieComponent },
         { path: '**', pathMatch: 'full', redirectTo: 'home/inicio'},
 
       ]

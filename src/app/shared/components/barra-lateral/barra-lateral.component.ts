@@ -32,6 +32,7 @@ export class BarraLateralComponent implements OnInit {
   viewElement(element: DestacadoModel){
     console.log(element)
     this.router.navigateByUrl(`${element.type}/${element.id}`);
+    console.log(`${element.type}/${element.id}`);
   }
 
   viewTrailer(trailer: TrailerModel){
