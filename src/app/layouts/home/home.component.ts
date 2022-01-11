@@ -16,8 +16,7 @@ export class HomeComponent {
   ){}
 
   ngOnInit(){
-    console.log("Hola mundo");
-    this.moviesService.getAllMovies().subscribe((movie) => { console.log(movie); });
+    
   }
 
 }
