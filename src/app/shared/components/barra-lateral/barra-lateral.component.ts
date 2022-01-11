@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DestacadoModel } from 'src/app/api-connect/models/destacado.model';
+import { TrailerModel } from 'src/app/api-connect/models/trailer.model';
+import { EspecialService } from 'src/app/api-connect/services/especial.service';
 
 @Component({
   selector: 'app-barra-lateral',
@@ -7,12 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarraLateralComponent implements OnInit {
 
-  destacados = ['uno', 'dos','tres'];
-  trailers = ['tuno', 'tdos','ttres'];
+  public destacados: DestacadoModel[] = [];
+  public trailers: TrailerModel[] = [];
+  public baseURL = "http://localhost:8080";
   
-  constructor() { }
+  constructor(
+    private especialService: EspecialService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.especialService.getDestacados().subscribe((destacados: any) => {
+      this.destacados = destacados;
+    });
+    this.especialService.getTrailers().subscribe((trailers: any) => {
+      this.trailers = trailers;
+    })
+  }
+
+  viewElement(element: DestacadoModel){
+    console.log(element)
+    this.router.navigateByUrl(`${element.type}/${element.id}`);
+  }
+
+  viewTrailer(trailer: TrailerModel){
+    console.log(trailer)
+    //open modal youtube vision
   }
 
 }

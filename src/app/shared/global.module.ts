@@ -6,11 +6,13 @@ import { MenuComponent } from './components/menu/menu.component';
 import { BarraLateralComponent } from './components/barra-lateral/barra-lateral.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     imports:[
         CommonModule,
         RouterModule,
+        MatCardModule,
     ],
     declarations: [
       HeaderComponent,

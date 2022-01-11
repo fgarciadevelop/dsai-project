@@ -13,9 +13,14 @@ export class HomeComponent {
   public movies = [];
 
   constructor(
+    private moviesService: SeriesService,
   ){}
 
   ngOnInit(){
+    this.moviesService.getAll().subscribe((movie) => { console.log(movie); });
+    this.moviesService.getNovedades().subscribe((movies) => { console.log(movies); });
+    this.moviesService.get('101').subscribe((movie) => { console.log(movie); });
+    
   }
 
 }
