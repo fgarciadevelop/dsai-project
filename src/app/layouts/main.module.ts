@@ -7,12 +7,16 @@ import { SerieComponent } from './serie/serie.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieComponent } from './movie/movie.component';
+import { SerieCardComponent } from "./serie-card/serie-card.component";
+import { SeriesComponent } from "./series/series.component";
 
 @NgModule({
     declarations: [
         CoreComponent,
         HomeComponent,
         SerieComponent,
+        SerieCardComponent,
+        SeriesComponent,
         MovieCardComponent,
         MoviesComponent,
         MovieComponent,
