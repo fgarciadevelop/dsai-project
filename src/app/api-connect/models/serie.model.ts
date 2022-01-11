@@ -1,3 +1,5 @@
+import { PersonaModel } from "./persona.model";
+
 export class SerieModel{
 
     public id: number | undefined;
@@ -8,6 +10,8 @@ export class SerieModel{
     public yearStart: number | undefined;
     public yearEnd: number | undefined;
     public seasons: number | undefined;
+    public creators: PersonaModel[] | undefined;
+    public cast: PersonaModel[] | undefined;
 
     constructor(
         id?: number,
@@ -18,6 +22,8 @@ export class SerieModel{
         yearStart?: number,
         yearEnd?: number,
         seasons?: number,
+        creators?: PersonaModel[],
+        cast?: PersonaModel[],
     ){
         this.id = id;
         this.url = url;
@@ -27,6 +33,8 @@ export class SerieModel{
         this.yearStart = yearStart;
         this.yearEnd = yearEnd;
         this.seasons = seasons;
+        this.creators = creators;
+        this.cast = cast;
     }
 
 }

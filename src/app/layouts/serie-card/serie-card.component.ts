@@ -19,10 +19,9 @@ export class SerieCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('No hace falta la llamada', this.serie);
     if(this.serie.id == undefined){
       this.seriesService.get(this.router.url.split('/')[2]).subscribe((serie: any) => {
-        console.log('Pelicula: ', serie);
+        console.log('Serie: ', serie);
         this.serie = serie;
       })
     }
