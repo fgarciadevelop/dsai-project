@@ -1,4 +1,5 @@
 .home-wrapper{
+    background-image: linear-gradient(0deg, rgba(179, 183, 238, 1) 10%, rgba(162, 163, 187, 0.35) 100%);
     .home-body{
         display: flex;
         .home-content{
@@ -17,7 +18,6 @@
             }
         }
         .barra{
-            background-color: red;
             margin: 0px;
         }
     }
