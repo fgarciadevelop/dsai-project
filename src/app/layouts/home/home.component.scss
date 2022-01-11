@@ -1,0 +1,24 @@
+.home-wrapper{
+    .home-body{
+        display: flex;
+        .home-content{
+            margin: 0px;
+            display: block;
+            .novedades-catalogo{
+                .peliculas-nuevas{
+                    display: flex;
+                    background-color: gray;
+
+                }
+                .series-nuevas{
+                    display: flex;
+                    background-color: rgb(43, 122, 136);
+                }
+            }
+        }
+        .barra{
+            background-color: red;
+            margin: 0px;
+        }
+    }
+}

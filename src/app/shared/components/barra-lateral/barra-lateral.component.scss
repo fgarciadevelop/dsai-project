@@ -1,0 +1,17 @@
+.barra-lateral-wrapper{
+    background-color: #093467;
+
+    .container-destacados, .container-trailers{
+        border: 3px solid black;
+        padding: 20px;
+        padding-top: 10px !important;
+        background-color: #9395d3;
+    }
+
+    .container-destacados{
+        border-bottom: 0px solid black;                                                                     
+    }
+
+    .container-trailers{}
+
+}
