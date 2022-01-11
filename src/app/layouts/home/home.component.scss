@@ -18,8 +18,11 @@
                     }
                 }
                 .series-nuevas{
-                    display: flex;
+                    display: block;
                     background-color: rgb(43, 122, 136);
+                    .peliculas{
+                        display: flex;
+                    }
                 }
             }
             .barra{
