@@ -1,4 +1,8 @@
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MovieModel } from 'src/app/api-connect/models/movie.model';
+import { MoviesService } from 'src/app/api-connect/services/movies.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    
+  ) { }
 
   ngOnInit(): void {
+
   }
 
 }

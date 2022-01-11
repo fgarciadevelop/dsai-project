@@ -1,0 +1,4 @@
+<mat-card (click)="viewDetail(movie)">
+    <img mat-card-image [src]="'http://localhost:8080' + movie.imgURL">
+    <mat-card-title>{{movie.title}}</mat-card-title>
+</mat-card>

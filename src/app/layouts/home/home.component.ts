@@ -16,7 +16,8 @@ export class HomeComponent {
   public series: SerieModel[] = [];
 
   constructor(
-    private moviesService: SeriesService,
+    private moviesService: MoviesService,
+    private seriesService: SeriesService,
   ){}
 
   ngOnInit(){
@@ -24,7 +25,11 @@ export class HomeComponent {
       this.movies = movies;
       console.log(movies); 
     });
-    this.moviesService.getNovedades().subscribe((series: any) => { 
+    /*this.moviesService.getAll().subscribe((movies: any) => { 
+      this.movies = movies;
+      console.log(movies); 
+    });*/
+    this.seriesService.getNovedades().subscribe((series: any) => { 
       this.series = series;
       console.log(series); 
     });
