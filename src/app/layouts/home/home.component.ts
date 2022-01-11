@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EspecialService } from 'src/app/api-connect/services/especial.service';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
 
 @Component({
@@ -13,10 +14,10 @@ export class HomeComponent {
 
   constructor(
     private moviesService: MoviesService,
+    private especialService: EspecialService,
   ){}
 
   ngOnInit(){
-    
   }
 
 }

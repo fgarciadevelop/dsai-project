@@ -5,32 +5,24 @@ import { ApiConnectService } from './api-connect.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MoviesService extends ApiConnectService{
+export class EspecialService extends ApiConnectService{
 
-  protected baseURL = this.URL + 'peliculas';
-  
   constructor(
     private http: HttpClient,
   ) { 
     super();
   }
 
-  public getAllMovies(){
+  public getTrailers(){
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders };
-    return this.http.get(`${this.baseURL}`, httpOptions);
+    return this.http.get(`${this.URL}trailers`, httpOptions);
   }
 
-  public getNovedadesMovies(){
+  public getDestacados(){
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders };
-    return this.http.get(`${this.baseURL}/novedades`, httpOptions);
-  }
-
-  public getMovie(index: String){
-    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const httpOptions = { headers: this.httpHeaders };
-    return this.http.get(`${this.baseURL}/${index}`, httpOptions);
+    return this.http.get(`${this.URL}destacados`, httpOptions);
   }
 
 }
