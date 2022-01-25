@@ -21,13 +21,14 @@
             }
             .detalles-reparto{
                 display: block;
+                margin-bottom: 10px;
                 .creators{
                     display: flex;
                     font-family: 'Merriweather', serif;
                     font-weight: bold;
                 }
                 .cast{
-                    display: flex;
+                    //display: flex;
                     mat-card{
                         margin: 5px;
                     }
