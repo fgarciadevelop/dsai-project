@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
+import { EventosService } from 'src/app/api-connect/services/eventos.service';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class MovieComponent implements OnInit {
   constructor(
     private router: Router,
     private moviesSercice: MoviesService,
+    private eventosService: EventosService,
   ) { }
 
   ngOnInit(): void {

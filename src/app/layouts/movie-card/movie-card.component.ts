@@ -19,10 +19,8 @@ export class MovieCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('No hace falta la llamada', this.movie);
     if(this.movie.id == undefined){
       this.movieService.get(this.router.url.split('/')[2]).subscribe((movie: any) => {
-        console.log('Pelicula: ', movie);
         this.movie = movie;
       })
     }

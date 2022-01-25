@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DestacadoModel } from 'src/app/api-connect/models/destacado.model';
 import { TrailerModel } from 'src/app/api-connect/models/trailer.model';
 import { EspecialService } from 'src/app/api-connect/services/especial.service';
+import { EventosService } from 'src/app/api-connect/services/eventos.service';
 
 @Component({
   selector: 'app-barra-lateral',
@@ -17,7 +18,7 @@ export class BarraLateralComponent implements OnInit {
   
   constructor(
     private especialService: EspecialService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -30,8 +31,9 @@ export class BarraLateralComponent implements OnInit {
   }
 
   viewElement(element: DestacadoModel){
-    console.log(element)
-    this.router.navigateByUrl(`${element.type}/${element.id}`);
+    this.router.navigateByUrl(`${element.type}/${element.id}`).then(() => {
+      window.location.reload();
+    });
     console.log(`${element.type}/${element.id}`);
   }
 
