@@ -1,3 +1,5 @@
+import { PersonaModel } from "./persona.model";
+
 export class MovieModel{
 
     public id: number | undefined;
@@ -7,6 +9,8 @@ export class MovieModel{
     public description: string | undefined;
     public year: number | undefined;
     public duration: number | undefined;
+    public director: PersonaModel | undefined;
+    public cast: PersonaModel[] | undefined;
 
     constructor(
         id?: number,
@@ -16,6 +20,8 @@ export class MovieModel{
         description?: string,
         year?: number,
         duration?: number,
+        director?: PersonaModel,
+        cast?: PersonaModel[],
     ){
         this.id = id;
         this.url = url;
@@ -24,6 +30,8 @@ export class MovieModel{
         this.description = description;
         this.year = year;
         this.duration = duration;
+        this.director = director;
+        this.cast = cast;
     }
 
 }
