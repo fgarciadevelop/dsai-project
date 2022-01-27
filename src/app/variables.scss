@@ -1,0 +1,44 @@
+@import './../assets/styles/fonts/fonts.scss';
+
+/* Colors */
+
+$color-primary: #a09cec;
+$color-secondary: #b4f4f4;
+$color-success: #42f578;
+$color-warning: #f5cb42;
+$color-error: #f54242;
+$color-white: #ffffff;
+$color-black: #1e1e24;
+$color-grey: #bdbdbd;
+$color-light-grey: #e0e0e0;
+$color-social-facebook-primary: #4b70ab;
+$color-social-facebook-secondary: #395583;
+$color-social-google-primary: #3f85f4;
+$color-social-google-secondary: #2a579e;
+
+/* Custom heights for scrolling */
+
+$height-main: calc(100% - 25px);
+
+/* Box shadows */
+
+$shadow-light-grey: 0 1px 5px 2px $color-light-grey;
+
+/* Fonts */
+
+$font-primary: 'Poppins';
+
+/* Transitions */
+
+$transition-button: background-color .5s,
+color .5s;
+
+/*Extra Variable*/
+
+$radius: 4px;
+
+/*Button colors*/
+
+$btn-primary: #84abff;
+$btn-secondary: #3978ff;
+$btn-red: #b62e2e;

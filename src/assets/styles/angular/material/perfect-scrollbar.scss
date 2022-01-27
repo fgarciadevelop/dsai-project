@@ -1,0 +1,53 @@
+@import "./../../../../app/variables.scss";
+
+/*******************
+  Perfect Scrollbar
+*******************/
+
+perfect-scrollbar {
+
+  .ps__rail-y {
+
+    background-color: transparent !important;
+
+    &:hover {
+
+      .ps__thumb-y {
+
+        background-color: $color-secondary !important;
+
+      }
+
+    }
+
+    &.ps--clicking .ps__thumb-y {
+
+      background-color: $color-primary;
+
+    }
+
+    .ps__thumb-y {
+
+      background-color: $color-secondary;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &:target {
+
+        background-color: $color-primary !important;
+
+      }
+
+      .ps--clicking,
+      .ps--scrolling-y {
+
+        background-color: $color-primary !important;
+
+      }
+
+    }
+
+  }
+
+}

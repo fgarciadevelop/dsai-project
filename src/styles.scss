@@ -2,6 +2,9 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+@import "./assets/styles/angular/material/perfect-scrollbar.scss";
+@import './../node_modules/swiper/swiper-bundle';
+
 html, body { 
     height: 100%;
     width: 100%;
@@ -17,4 +20,12 @@ h1{
 }
 p{
     font-family: 'Merriweather', serif;
+}
+
+router-outlet + *{
+
+    color: $color-primary;
+    width: 100%;
+    height: calc(100% - 163px);
+    
 }

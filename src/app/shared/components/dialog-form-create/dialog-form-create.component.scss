@@ -1,0 +1,40 @@
+.dialog{
+    .header{}
+    .containier-fluid{
+        .row{
+            swiper{
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+    .footer{
+        .row{
+            justify-content: space-around;
+        }
+    }
+}
+
+.datos-form{
+    height: 100%;
+    margin: 0 15%;
+    .title{
+    }
+    .linea{
+        mat-form-field{
+            width: 100%;
+            input{
+                width: 100%;
+            }
+        }
+    }
+}
+
+.actores{
+    padding-bottom: 10px;
+}
+
+.nuevo-actor{
+    display: flex;
+    flex-direction: column;
+}

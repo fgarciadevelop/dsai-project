@@ -1,7 +1,13 @@
 .container-fluid{
     .header{
+        display: flex;
+        align-items: center;
         .titulo{
             padding-top: 5px;
+        }
+        .boton-container{
+            display: flex;
+            justify-content: end;
         }
     }
     .body{
