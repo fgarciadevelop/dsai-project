@@ -1,1 +1,11 @@
-<p>series works!</p>
+<div class="container-fluid">
+    <div class="row header">
+        <div class="col titulo">
+            <h1>Series</h1>
+        </div>
+    </div>
+    <div class="row body">
+        <app-serie-card class="col-12 col-md-6 col-lg-3" *ngFor="let serie of series" [serie]="serie"></app-serie-card>
+    </div>
+    <div class="row footer"></div>
+</div>
