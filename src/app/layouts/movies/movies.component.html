@@ -1,1 +1,11 @@
-<p>movies works!</p>
+<div class="container-fluid">
+    <div class="row header">
+        <div class="col titulo">
+            <h1>Películas</h1>
+        </div>
+    </div>
+    <div class="row body">
+        <app-movie-card class="col-12 col-md-6 col-lg-3" *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+    <div class="row footer"></div>
+</div>
