@@ -103,6 +103,21 @@
                       </button>
                   </div>
 
+                  <div *ngIf="currentFile" class="progress my-3">
+                    <div
+                      class="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      attr.aria-valuenow="{{ progress }}"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      [ngStyle]="{ width: progress + '%' }"
+                    >
+                      {{ progress }}%
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+                  
               </form>
             </div></ng-template>                    
 
@@ -114,8 +129,8 @@
     <div class="footer">
 
         <div class="row">
-            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()">Añadir película</button>
-            <button mat-raised-button color="warn" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="cancelar()">Cancelar</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK">Añadir película</button>
+            <button mat-dialog-close mat-raised-button color="warn" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="cancelar()">Cancelar</button>
         </div>
     </div>
 </div>

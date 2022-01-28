@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PersonaModel } from 'src/app/api-connect/models/persona.model';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
@@ -11,11 +11,15 @@ import { Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } from 'swiper';
+import { Observable } from 'rxjs';
+import { UploadService } from 'src/app/api-connect/services/upload.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface DialogFormCreate{
 
-  tipo: string;
+  dialog: MatDialogRef<any>,
+  tipo: string,
   pelicula: {
     id: string,
     url: string,
@@ -26,7 +30,6 @@ export interface DialogFormCreate{
     duration: number,
     director: number,
     cast: number[],
-    imagen: File,
   },
   serie: {
     id: string,
@@ -38,7 +41,6 @@ export interface DialogFormCreate{
     duration: number,
     director: number,
     cast: number[],
-    imagen: File,
   }
 
 }
@@ -49,6 +51,12 @@ export interface DialogFormCreate{
   styleUrls: ['./dialog-form-create.component.scss']
 })
 export class DialogFormCreateComponent implements OnInit {
+
+  public currentFile?: File;
+  public progress: number = 0;
+  public message: string = '';
+
+  public buttonOK: boolean = false;
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -68,6 +76,7 @@ export class DialogFormCreateComponent implements OnInit {
   public director = new FormControl();
   public cast = new FormControl();
 
+  public imagen!: File;
   public fileName: string = '';
 
   //Form data movie
@@ -77,21 +86,18 @@ export class DialogFormCreateComponent implements OnInit {
   public get year(){ return this.dataForm.get('year') };
   public get duration(){ return this.dataForm.get('duration') };
 
-  //Form act movie
-  //public get director(){ return this.actForm.get('director') };
-  //public get cast(){ return this.actForm.get('cast') };
-  
   //Form extra movie
   public get url(){ return this.extraForm.get('url') };
   public get imgURL(){ return this.extraForm.get('imgURL') };
-  //public get imagen(){ return this.extraForm.get('imagen') };
 
 
   constructor(
+    public dialogRef: MatDialogRef<DialogFormCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogFormCreate,
     private moviesService: MoviesService,
     private seriesService: SeriesService,
     private personasService: PersonasService,
+    private uploadService: UploadService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -137,33 +143,57 @@ export class DialogFormCreateComponent implements OnInit {
     console.log("Form enviado");
     console.table(this.dataForm);
 
-    let dataFromForm = {
-      title: this.dataForm.get('title')?.value,
-      description: this.dataForm.get('description')?.value,
-      year: this.dataForm.get('year')?.value,
-      duration: this.dataForm.get('duration')?.value,
-      director: this.director.value,
-      cast: this.cast.value,
-      url: this.extraForm.get('url')?.value,
-      imgURL: this.data.pelicula.imgURL,
-      imagen: this.data.pelicula.imagen,
-      id: this.dataForm.get('id'),
-    }
-    console.log(dataFromForm);
+    this.moviesService.getNextMovie().then((res: any) => {
+      let dataFromForm = {
+        title: this.dataForm.get('title')?.value,
+        description: this.dataForm.get('description')?.value,
+        year: this.dataForm.get('year')?.value,
+        duration: this.dataForm.get('duration')?.value,
+        director: this.director.value,
+        cast: this.cast.value,
+        url: this.extraForm.get('url')?.value,
+        imgURL: this.data.pelicula.imgURL,
+        id: res,
+      }
+      console.log(dataFromForm);
+      this.moviesService.create(dataFromForm).subscribe((res) => {
+        console.log(res);
+        this.dialogRef.close(res);
+      })
+    });
   }
 
   public cancelar(){
-    console.log("cancelado");
+    console.log(this.dialogRef);
+    this.dialogRef.close('hola');
   }
 
   onFileSelected(event: any){
     const file: File = event.target.files[0];
     if(file){
       this.fileName = file.name;
-      this.data.pelicula.imagen = file;
-      this.data.pelicula.imgURL = 'movie' + new Date().getTime().toString();
+      this.imagen = file;
+      this.upload();
     }
-    console.log(this.data.pelicula.imgURL);
+  }
+
+  upload(): void {
+    this.progress = 0;
+    this.currentFile = this.imagen;
+    this.uploadService.upload(this.currentFile).subscribe((res: any) => {
+      if(res.type === HttpEventType.UploadProgress){
+        this.progress = Math.round(100 * res.loaded / res.total);
+      }else if (res instanceof HttpResponse){
+        this.data.pelicula.imgURL = '/img/' + res.body + '.jpg';
+        this.buttonOK = true;
+        console.log(this.buttonOK)
+      }
+    },
+    (err: any) => {
+      console.log(err);
+      this.progress = 0;
+      this.currentFile = undefined;
+    })
   }
 
  }
