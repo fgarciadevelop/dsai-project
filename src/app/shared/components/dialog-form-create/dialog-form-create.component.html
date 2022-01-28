@@ -1,21 +1,21 @@
 <app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
 <div class="wrapper dialog" *ngIf="!loading">
     <div class="header">
-        <h1>Crear película</h1>
+        <h1 *ngIf="data.tipo == 'movie'">Crear película</h1>
+        <h1 *ngIf="data.tipo == 'serie'">Crear serie</h1>
     </div>
 
     <div class="container-fluid">
       <div class="row">
-        <h3>Datos de la película</h3>
+        <h3 *ngIf="data.tipo == 'movie'">Datos de la película</h3>
+        <h3 *ngIf="data.tipo == 'serie'">Datos de la serie</h3>
         <hr>
       </div>
       <div class="row">
           <swiper [slidesPerView]="1" [spaceBetween]="0" [navigation]="true" [centeredSlides]="true">
             
-            <ng-template swiperSlide><div class="datos-principales">
-              
+            <ng-template swiperSlide *ngIf="data.tipo == 'movie'"><div class="datos-principales">
               <h4>Datos principales</h4>
-              
               <perfect-scrollbar>
                 
                 <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
@@ -44,10 +44,44 @@
                 </form>
                     
                 </perfect-scrollbar>
+            </div></ng-template>
+            <ng-template swiperSlide *ngIf="data.tipo == 'serie'"><div class="datos-principales">
+              <h4>Datos principales</h4>
+              <perfect-scrollbar>
 
+                <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+                    <div class="linea">
+                      <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="Título de la serie" formControlName="title">
+                      </mat-form-field>
+                    </div>
+                    <div class="linea">
+                      <mat-form-field class="form-input2">
+                        <input matInput type="text" placeholder="Descripción" formControlName="description">
+                      </mat-form-field>
+                    </div>
+                    <div class="linea">
+                        <mat-form-field class="form-input2">
+                          <input matInput type="text" placeholder="Año de estreno" formControlName="yearStart">
+                        </mat-form-field>
+                      </div>
+                    <div class="linea">
+                    <mat-form-field class="form-input2">
+                        <input matInput type="text" placeholder="Año de finalización" formControlName="yearEnd">
+                    </mat-form-field>
+                    </div>
+                    <div class="linea">
+                      <mat-form-field class="form-input2">
+                          <input matInput type="text" placeholder="Temporadas" formControlName="seasons">
+                      </mat-form-field>
+                    </div>
+            
+                </form>
+                    
+                </perfect-scrollbar>
             </div></ng-template>
 
-            <ng-template swiperSlide>
+            <ng-template swiperSlide *ngIf="data.tipo == 'movie'">
               <div class="datos-cast">
                 <h4>Participantes</h4>
                 
@@ -64,6 +98,42 @@
                     <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
                       <span>¿No aparece? ¡Créalo!</span>
                       <button mat-raised-button color="primary">Crear director</button>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <mat-form-field appearance="fill" class="col-12 col-md-6 col-lg-8">
+                      <mat-label>Escoge los actores</mat-label>
+                      <mat-select [formControl]="cast" multiple [(ngModel)]="selectedCast" (ngModelChange)="cambio($event)">
+                        <mat-option [value]="persona.id" *ngFor="let persona of personas">{{persona.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
+                      <span>¿No aparece? ¡Créalo!</span>
+                      <button mat-raised-button color="primary">Crear actor</button>
+                    </div>
+                  </div>
+          
+                </form>
+
+              </div>
+            </ng-template>
+            <ng-template swiperSlide *ngIf="data.tipo == 'serie'">
+              <div class="datos-cast">
+                <h4>Participantes</h4>
+                
+                <form [formGroup]="actForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+        
+                  <div class="row">
+                    <mat-form-field appearance="fill" class="col-12 col-md-6 col-lg-8">
+                      <mat-label>Escoge los creadores</mat-label>
+                      <mat-select [formControl]="creators" multiple [(ngModel)]="selectedCreators" (ngModelChange)="cambio($event)">
+                        <mat-option [value]="persona.id" *ngFor="let persona of personas">{{persona.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
+                      <span>¿No aparece? ¡Créalo!</span>
+                      <button mat-raised-button color="primary">Crear actor</button>
                     </div>
                   </div>
 

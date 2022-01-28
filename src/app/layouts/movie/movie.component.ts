@@ -32,10 +32,8 @@ export class MovieComponent implements OnInit {
     }
     this.moviesService.get(this.idMovie).subscribe((movie: any) => {
       this.movie = movie;
+      console.log(movie);
       if(this.movie != null){
-        if(Array.isArray(this.movie.director)){
-          this.movieHasDirectors = true;
-        }
         this.loading = false;
       }else{
         this.router.navigateByUrl('home');

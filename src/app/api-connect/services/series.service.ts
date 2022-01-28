@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SerieModel } from '../models/serie.model';
 import { ApiConnectService } from './api-connect.service';
 
 @Injectable({
@@ -31,6 +32,12 @@ export class SeriesService extends ApiConnectService{
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders };
     return this.http.get(`${this.baseURL}/${index}`, httpOptions);
+  }
+
+  public create(serie: SerieModel){
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders};
+    return this.http.post(`${this.baseURL}`, serie, httpOptions);
   }
 
 }

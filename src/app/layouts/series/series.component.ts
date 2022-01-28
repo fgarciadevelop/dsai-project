@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
 import { SeriesService } from 'src/app/api-connect/services/series.service';
+import { DialogFormCreateComponent } from 'src/app/shared/components/dialog-form-create/dialog-form-create.component';
 
 @Component({
   selector: 'app-series',
@@ -8,10 +10,13 @@ import { SeriesService } from 'src/app/api-connect/services/series.service';
   styleUrls: ['./series.component.scss']
 })
 export class SeriesComponent implements OnInit {
-
+  
+  public dialogOpen: any;
   public series: SerieModel[] = [];
+  
   constructor(
     private seriesService: SeriesService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -19,6 +24,26 @@ export class SeriesComponent implements OnInit {
       this.series = series;
       console.table(this.series);
     });
+  }
+
+  addSerie(){
+    console.log('Añadiendo película');
+    this.dialogOpen = this.dialog.open(DialogFormCreateComponent,{
+      data: {
+        action: 'crear',
+        dialog: this.dialogOpen,
+        tipo: 'serie',
+        pelicula: {},
+        serie: {}
+      }
+
+    })
+
+    this.dialogOpen.afterClosed().subscribe((res: any) => {
+      console.log('Cerrado', res);
+      this.series.push(res);
+    });
+
   }
 
 }

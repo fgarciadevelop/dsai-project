@@ -39,9 +39,10 @@ export interface DialogFormCreate{
     imgURL: string,
     title: string,
     description: string,
-    year: number,
-    duration: number,
-    director: any,
+    yearStart: number,
+    yearEnd: number,
+    seasons: number,
+    creators: any[],
     cast: any[],
   }
 
@@ -61,6 +62,7 @@ export class DialogFormCreateComponent implements OnInit {
   public buttonOK: boolean = false;
 
   public selectedCast: number[] = [];
+  public selectedCreators: number[] = [];
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -80,6 +82,8 @@ export class DialogFormCreateComponent implements OnInit {
   public director = new FormControl();
   public cast = new FormControl();
 
+  public creators = new FormControl();
+
   public imagen!: File;
   public fileName: string = '';
 
@@ -89,6 +93,11 @@ export class DialogFormCreateComponent implements OnInit {
   public get description(){ return this.dataForm.get('description') };
   public get year(){ return this.dataForm.get('year') };
   public get duration(){ return this.dataForm.get('duration') };
+
+  //Form data serie
+  public get yearStart(){ return this.dataForm.get('yearStart') };
+  public get yearEnd(){ return this.dataForm.get('yearEnd') };
+  public get seasons(){ return this.dataForm.get('seasons') };
 
   //Form extra movie
   public get url(){ return this.extraForm.get('url') };
@@ -119,22 +128,41 @@ export class DialogFormCreateComponent implements OnInit {
       this.personas = personas;
       console.log(this.data);
 
-      this.dataForm = this.fb.group({
-        title: new FormControl(this.data.pelicula.title, [Validators.required]),
-        description: new FormControl(this.data.pelicula.description, [Validators.required]),
-        year: new FormControl(this.data.pelicula.year, [Validators.required]),
-        duration: new FormControl(this.data.pelicula.duration, [Validators.required]),
-        id: new FormControl(this.data.pelicula.id, [Validators.required]),
-      });
+      if(this.data.tipo == 'serie'){
+        this.dataForm = this.fb.group({
+          title: new FormControl(this.data.serie.title, [Validators.required]),
+          description: new FormControl(this.data.serie.description, [Validators.required]),
+          yearStart: new FormControl(this.data.serie.yearStart, [Validators.required]),
+          yearEnd: new FormControl(this.data.serie.yearEnd, [Validators.required]),
+          seasons: new FormControl(this.data.serie.seasons, [Validators.required]),
+        });
 
-      this.actForm = this.fb.group({
-        director: new FormControl(this.data.pelicula.director, [Validators.required]),
-        cast: new FormControl(this.data.pelicula.cast, [Validators.required]),
-      });
-
-      this.extraForm = this.fb.group({
-        url: new FormControl(this.data.pelicula.url),
-      });
+        this.actForm = this.fb.group({
+          director: new FormControl(this.data.serie.creators, [Validators.required]),
+          cast: new FormControl(this.data.serie.cast, [Validators.required]),
+        });
+  
+        this.extraForm = this.fb.group({
+          url: new FormControl(this.data.serie.url),
+        });
+      }else if(this.data.tipo == 'movie'){
+        this.dataForm = this.fb.group({
+          title: new FormControl(this.data.pelicula.title, [Validators.required]),
+          description: new FormControl(this.data.pelicula.description, [Validators.required]),
+          year: new FormControl(this.data.pelicula.year, [Validators.required]),
+          duration: new FormControl(this.data.pelicula.duration, [Validators.required]),
+          id: new FormControl(this.data.pelicula.id, [Validators.required]),
+        });
+  
+        this.actForm = this.fb.group({
+          director: new FormControl(this.data.pelicula.director, [Validators.required]),
+          cast: new FormControl(this.data.pelicula.cast, [Validators.required]),
+        });
+  
+        this.extraForm = this.fb.group({
+          url: new FormControl(this.data.pelicula.url),
+        });
+      }
 
       if(this.data.action == 'editar'){
         if(this.dataForm.status == 'VALID' && this.actForm.status == 'VALID' && this.extraForm.status == 'VALID'){
@@ -157,48 +185,95 @@ export class DialogFormCreateComponent implements OnInit {
   }
 
   public guardarForm(){
-    if(this.data.action == 'editar'){
-      let dataFromForm = {
-        title: this.dataForm.get('title')?.value,
-        description: this.dataForm.get('description')?.value,
-        year: this.dataForm.get('year')?.value,
-        duration: this.dataForm.get('duration')?.value,
-        director: this.director.value,
-        cast: this.selectedCast,
-        url: this.extraForm.get('url')?.value,
-        imgURL: this.data.pelicula.imgURL,
-        id: this.data.pelicula.id,
-      }
-      if(this.director.valid && this.director.value == null){
-        dataFromForm.director = this.data.pelicula.director.id;
-      }
-      console.log(dataFromForm);
-      this.moviesService.edit(dataFromForm).subscribe((res) => {
-        console.log(res);
-        this.dialogRef.close(res);
-      })
 
-    }else if(this.data.action == 'crear'){
-      this.moviesService.getNextMovie().then((res: any) => {
+    if(this.data.tipo == 'movie'){
+      if(this.data.action == 'editar'){
         let dataFromForm = {
           title: this.dataForm.get('title')?.value,
           description: this.dataForm.get('description')?.value,
           year: this.dataForm.get('year')?.value,
           duration: this.dataForm.get('duration')?.value,
           director: this.director.value,
-          cast: this.cast.value,
+          cast: this.selectedCast,
           url: this.extraForm.get('url')?.value,
           imgURL: this.data.pelicula.imgURL,
-          id: res,
+          id: this.data.pelicula.id,
+        }
+        if(this.director.valid && this.director.value == null){
+          dataFromForm.director = this.data.pelicula.director.id;
         }
         console.log(dataFromForm);
-        this.moviesService.create(dataFromForm).subscribe((res) => {
+        this.moviesService.edit(dataFromForm).subscribe((res) => {
           console.log(res);
           this.dialogRef.close(res);
         })
-      });
+  
+      }else if(this.data.action == 'crear'){
+        this.moviesService.getNextMovie().then((res: any) => {
+          let dataFromForm = {
+            title: this.dataForm.get('title')?.value,
+            description: this.dataForm.get('description')?.value,
+            year: this.dataForm.get('year')?.value,
+            duration: this.dataForm.get('duration')?.value,
+            director: this.director.value,
+            cast: this.cast.value,
+            url: this.extraForm.get('url')?.value,
+            imgURL: this.data.pelicula.imgURL,
+            id: res,
+          }
+          console.log(dataFromForm);
+          this.moviesService.create(dataFromForm).subscribe((res) => {
+            console.log(res);
+            this.dialogRef.close(res);
+          })
+        });
+      }
+    }else if(this.data.tipo == 'serie'){
+      if(this.data.action == 'editar'){
+        let dataFromForm = {
+          title: this.dataForm.get('title')?.value,
+          description: this.dataForm.get('description')?.value,
+          yearStart: this.dataForm.get('yearStart')?.value,
+          yearEnd: this.dataForm.get('yearEnd')?.value,
+          seasons: this.dataForm.get('seasons')?.value,
+          creators: this.selectedCreators,
+          cast: this.selectedCast,
+          url: this.extraForm.get('url')?.value,
+          imgURL: this.data.serie.imgURL,
+          id: this.data.serie.id,
+        }
+        /*if(this.director.valid && this.director.value == null){
+          dataFromForm.director = this.data.pelicula.director.id;
+        }*/
+        console.log(dataFromForm);
+        this.moviesService.edit(dataFromForm).subscribe((res) => {
+          console.log(res);
+          this.dialogRef.close(res);
+        })
+  
+      }else if(this.data.action == 'crear'){
+        console.log('cargar');
+        this.moviesService.getNextMovie().then((res: any) => {
+          let dataFromForm = {
+            title: this.dataForm.get('title')?.value,
+            description: this.dataForm.get('description')?.value,
+            yearStart: this.dataForm.get('yearStart')?.value,
+            yearEnd: this.dataForm.get('yearEnd')?.value,
+            seasons: this.dataForm.get('seasons')?.value,
+            creators: this.creators.value,
+            cast: this.cast.value,
+            url: this.extraForm.get('url')?.value,
+            imgURL: this.data.serie.imgURL,
+            id: res,
+          }
+          console.log(dataFromForm);
+          this.seriesService.create(dataFromForm).subscribe((res) => {
+            console.log(res);
+            this.dialogRef.close(res);
+          })
+        });
+      }
     }
-
   }
 
   public cancelar(){
@@ -222,9 +297,12 @@ export class DialogFormCreateComponent implements OnInit {
       if(res.type === HttpEventType.UploadProgress){
         this.progress = Math.round(100 * res.loaded / res.total);
       }else if (res instanceof HttpResponse){
-        this.data.pelicula.imgURL = '/img/' + res.body + '.jpg';
+        if(this.data.tipo == 'movie'){
+          this.data.pelicula.imgURL = '/img/' + res.body + '.jpg';
+        }else if(this.data.tipo == 'serie'){
+          this.data.serie.imgURL = '/img/' + res.body + '.jpg';
+        }
         this.buttonOK = true;
-        console.log(this.buttonOK)
       }
     },
     (err: any) => {
