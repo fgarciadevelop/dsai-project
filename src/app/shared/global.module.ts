@@ -16,7 +16,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SpinnerComponent } from "./components/spinner/spinner.component";
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
 import { SwiperModule } from 'swiper/angular';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFileUploadModule } from "angular-material-fileupload";
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -24,17 +27,21 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
     imports:[
-        CommonModule,
-        RouterModule,
-        MatCardModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        SwiperModule,
-        PerfectScrollbarModule,
-        MatSelectModule,
+      CommonModule,
+      RouterModule,
+      MatCardModule,
+      MatButtonModule,
+      MatDialogModule,
+      MatFormFieldModule,
+      MatInputModule,
+      ReactiveFormsModule,
+      SwiperModule,
+      PerfectScrollbarModule,
+      MatSelectModule,
+      MatFileUploadModule,
+      MatIconModule,
+      MatProgressBarModule,
+
     ],
     declarations: [
       HeaderComponent,
@@ -62,6 +69,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       SwiperModule,
       PerfectScrollbarModule,
       MatSelectModule,
+      MatFileUploadModule,
+      MatIconModule,
+      MatProgressBarModule,
     ],
     providers: [{
         provide: PERFECT_SCROLLBAR_CONFIG,

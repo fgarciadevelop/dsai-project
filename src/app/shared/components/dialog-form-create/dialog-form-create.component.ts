@@ -26,6 +26,7 @@ export interface DialogFormCreate{
     duration: number,
     director: number,
     cast: number[],
+    imagen: File,
   },
   serie: {
     id: string,
@@ -37,6 +38,7 @@ export interface DialogFormCreate{
     duration: number,
     director: number,
     cast: number[],
+    imagen: File,
   }
 
 }
@@ -66,6 +68,8 @@ export class DialogFormCreateComponent implements OnInit {
   public director = new FormControl();
   public cast = new FormControl();
 
+  public fileName: string = '';
+
   //Form data movie
   public get id(){ return this.dataForm.get('id') };
   public get title(){ return this.dataForm.get('title') };
@@ -80,6 +84,7 @@ export class DialogFormCreateComponent implements OnInit {
   //Form extra movie
   public get url(){ return this.extraForm.get('url') };
   public get imgURL(){ return this.extraForm.get('imgURL') };
+  //public get imagen(){ return this.extraForm.get('imagen') };
 
 
   constructor(
@@ -119,8 +124,7 @@ export class DialogFormCreateComponent implements OnInit {
       });
 
       this.extraForm = this.fb.group({
-        url: new FormControl(this.data.pelicula.url, [Validators.required]),
-        imgURL: new FormControl(this.data.pelicula.imgURL, [Validators.required]),
+        url: new FormControl(this.data.pelicula.url),
       });
 
       this.loading = false;
@@ -140,8 +144,9 @@ export class DialogFormCreateComponent implements OnInit {
       duration: this.dataForm.get('duration')?.value,
       director: this.director.value,
       cast: this.cast.value,
-      url: this.extraForm.get('url'),
-      imgURL: this.extraForm.get('imgURL'),
+      url: this.extraForm.get('url')?.value,
+      imgURL: this.data.pelicula.imgURL,
+      imagen: this.data.pelicula.imagen,
       id: this.dataForm.get('id'),
     }
     console.log(dataFromForm);
@@ -151,4 +156,14 @@ export class DialogFormCreateComponent implements OnInit {
     console.log("cancelado");
   }
 
-}
+  onFileSelected(event: any){
+    const file: File = event.target.files[0];
+    if(file){
+      this.fileName = file.name;
+      this.data.pelicula.imagen = file;
+      this.data.pelicula.imgURL = 'movie' + new Date().getTime().toString();
+    }
+    console.log(this.data.pelicula.imgURL);
+  }
+
+ }

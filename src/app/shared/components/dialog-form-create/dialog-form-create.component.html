@@ -90,15 +90,19 @@
         
                   <div class="linea">
                     <mat-form-field class="form-input">
-                      <input matInput type="text" placeholder="Dirección de la película" formControlName="url">
+                      <input matInput type="text" placeholder="Escribe un enlace al contenido" formControlName="url">
                     </mat-form-field>
                   </div>
-                  <div class="linea">
-                    <mat-form-field class="form-input2">
-                      <input matInput type="text" placeholder="Dirección imágen de la película" formControlName="imgURL">
-                    </mat-form-field>
+
+                  <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload style="display: none;">
+                  <div class="file-upload">
+                    {{fileName || "Selecciona una imagen para la película."}}
+                      <button mat-mini-fab color="primary" class="upload-btn"
+                        (click)="fileUpload.click()">
+                          <mat-icon>attach_file</mat-icon>
+                      </button>
                   </div>
-          
+
               </form>
             </div></ng-template>                    
 
