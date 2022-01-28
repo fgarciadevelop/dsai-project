@@ -28,7 +28,7 @@ export class MoviesService extends ApiConnectService{
     return this.http.get(`${this.baseURL}/novedades`, httpOptions);
   }
 
-  public get(index: String){
+  public get(index: string){
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders };
     return this.http.get(`${this.baseURL}/${index}`, httpOptions);
@@ -45,6 +45,12 @@ export class MoviesService extends ApiConnectService{
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders};
     return this.http.put(`${this.baseURL}`, movie, httpOptions);
+  }
+
+  public delete(index: string){
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders };
+    return this.http.delete(`${this.baseURL}/${index}`, httpOptions);
   }
 
   public getNextMovie(){

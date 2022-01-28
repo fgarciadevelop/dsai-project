@@ -44,7 +44,12 @@ export class MovieComponent implements OnInit {
   }
 
   deleteMovie(movie: MovieModel){
+    this.loading = true;
     console.log('Borrando esta película: ', movie);
+    this.moviesService.delete(movie.id!).subscribe((res) => {
+      this.loading = false;
+      this.router.navigateByUrl('home');
+    })
   }
 
   editMovie(movie: MovieModel){
@@ -59,7 +64,6 @@ export class MovieComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((res:any) => {
-      console.log('Cerrado', res);
       this.movie = res;
     })
   }
