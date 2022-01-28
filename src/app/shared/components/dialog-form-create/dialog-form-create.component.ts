@@ -14,11 +14,13 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } fr
 import { Observable } from 'rxjs';
 import { UploadService } from 'src/app/api-connect/services/upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { textChangeRangeIsUnchanged } from 'typescript';
+import { MovieModel } from 'src/app/api-connect/models/movie.model';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface DialogFormCreate{
 
-  dialog: MatDialogRef<any>,
+  action: string,
   tipo: string,
   pelicula: {
     id: string,
@@ -28,8 +30,8 @@ export interface DialogFormCreate{
     description: string,
     year: number,
     duration: number,
-    director: number,
-    cast: number[],
+    director: any,
+    cast: any[],
   },
   serie: {
     id: string,
@@ -39,8 +41,8 @@ export interface DialogFormCreate{
     description: string,
     year: number,
     duration: number,
-    director: number,
-    cast: number[],
+    director: any,
+    cast: any[],
   }
 
 }
@@ -57,6 +59,8 @@ export class DialogFormCreateComponent implements OnInit {
   public message: string = '';
 
   public buttonOK: boolean = false;
+
+  public selectedCast: number[] = [];
 
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -89,7 +93,6 @@ export class DialogFormCreateComponent implements OnInit {
   //Form extra movie
   public get url(){ return this.extraForm.get('url') };
   public get imgURL(){ return this.extraForm.get('imgURL') };
-
 
   constructor(
     public dialogRef: MatDialogRef<DialogFormCreateComponent>,
@@ -133,6 +136,20 @@ export class DialogFormCreateComponent implements OnInit {
         url: new FormControl(this.data.pelicula.url),
       });
 
+      if(this.data.action == 'editar'){
+        if(this.dataForm.status == 'VALID' && this.actForm.status == 'VALID' && this.extraForm.status == 'VALID'){
+          this.buttonOK = true;
+        }
+        for(let actor of this.data.pelicula.cast){
+          let position = 0;
+          for(let persona of this.personas){
+            if(persona.id == actor.id){
+              this.selectedCast.push(position);
+            }
+            position++;
+          }
+        }
+      }
       this.loading = false;
 
     });
@@ -140,27 +157,48 @@ export class DialogFormCreateComponent implements OnInit {
   }
 
   public guardarForm(){
-    console.log("Form enviado");
-    console.table(this.dataForm);
-
-    this.moviesService.getNextMovie().then((res: any) => {
+    if(this.data.action == 'editar'){
       let dataFromForm = {
         title: this.dataForm.get('title')?.value,
         description: this.dataForm.get('description')?.value,
         year: this.dataForm.get('year')?.value,
         duration: this.dataForm.get('duration')?.value,
         director: this.director.value,
-        cast: this.cast.value,
+        cast: this.selectedCast,
         url: this.extraForm.get('url')?.value,
         imgURL: this.data.pelicula.imgURL,
-        id: res,
+        id: this.data.pelicula.id,
+      }
+      if(this.director.valid && this.director.value == null){
+        dataFromForm.director = this.data.pelicula.director.id;
       }
       console.log(dataFromForm);
-      this.moviesService.create(dataFromForm).subscribe((res) => {
+      this.moviesService.edit(dataFromForm).subscribe((res) => {
         console.log(res);
         this.dialogRef.close(res);
       })
-    });
+
+    }else if(this.data.action == 'crear'){
+      this.moviesService.getNextMovie().then((res: any) => {
+        let dataFromForm = {
+          title: this.dataForm.get('title')?.value,
+          description: this.dataForm.get('description')?.value,
+          year: this.dataForm.get('year')?.value,
+          duration: this.dataForm.get('duration')?.value,
+          director: this.director.value,
+          cast: this.cast.value,
+          url: this.extraForm.get('url')?.value,
+          imgURL: this.data.pelicula.imgURL,
+          id: res,
+        }
+        console.log(dataFromForm);
+        this.moviesService.create(dataFromForm).subscribe((res) => {
+          console.log(res);
+          this.dialogRef.close(res);
+        })
+      });
+    }
+
   }
 
   public cancelar(){
@@ -194,6 +232,10 @@ export class DialogFormCreateComponent implements OnInit {
       this.progress = 0;
       this.currentFile = undefined;
     })
+  }
+
+  cambio(event: any){
+    console.log(event)
   }
 
  }

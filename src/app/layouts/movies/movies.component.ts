@@ -30,6 +30,7 @@ export class MoviesComponent implements OnInit {
     console.log('Añadiendo película');
     this.dialogOpen = this.dialog.open(DialogFormCreateComponent,{
       data: {
+        action: 'crear',
         dialog: this.dialogOpen,
         tipo: 'movie',
         pelicula: {},

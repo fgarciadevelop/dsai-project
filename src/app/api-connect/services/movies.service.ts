@@ -35,10 +35,16 @@ export class MoviesService extends ApiConnectService{
   }
 
   public create(movie: MovieModel){
-    console.log(movie)
     this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
     const httpOptions = { headers: this.httpHeaders};
     return this.http.post(`${this.baseURL}`, movie, httpOptions);
+  }
+
+  public edit(movie: any){
+    console.log(movie)
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders};
+    return this.http.put(`${this.baseURL}`, movie, httpOptions);
   }
 
   public getNextMovie(){

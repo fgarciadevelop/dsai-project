@@ -2,7 +2,7 @@ import { PersonaModel } from "./persona.model";
 
 export class MovieModel{
 
-    public id: number | undefined;
+    public id: string | undefined;
     public url: string | undefined;
     public imgURL: string | undefined;
     public title: string | undefined;
@@ -13,7 +13,7 @@ export class MovieModel{
     public cast: PersonaModel[] | undefined;
 
     constructor(
-        id?: number,
+        id?: string,
         url?: string,
         imgURL?: string,
         title?: string,

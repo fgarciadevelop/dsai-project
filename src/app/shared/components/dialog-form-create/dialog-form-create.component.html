@@ -55,7 +55,8 @@
         
                   <div class="row actores">
                     <mat-form-field appearance="fill" class="col-12 col-md-6 col-lg-8">
-                      <mat-label>Escoge el director</mat-label>
+                      <mat-label *ngIf="data.action != 'editar'">Escoge el director</mat-label>
+                      <mat-label *ngIf="data.action == 'editar'">{{data.pelicula.director.name}}</mat-label>
                       <mat-select [formControl]="director">
                         <mat-option value="{{persona.id}}" *ngFor="let persona of personas">{{persona.name}}</mat-option>
                       </mat-select>
@@ -65,11 +66,12 @@
                       <button mat-raised-button color="primary">Crear director</button>
                     </div>
                   </div>
+
                   <div class="row">
                     <mat-form-field appearance="fill" class="col-12 col-md-6 col-lg-8">
                       <mat-label>Escoge los actores</mat-label>
-                      <mat-select [formControl]="cast" multiple>
-                        <mat-option value="{{persona.id}}" *ngFor="let persona of personas">{{persona.name}}</mat-option>
+                      <mat-select [formControl]="cast" multiple [(ngModel)]="selectedCast" (ngModelChange)="cambio($event)">
+                        <mat-option [value]="persona.id" *ngFor="let persona of personas">{{persona.name}}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
@@ -83,7 +85,7 @@
               </div>
             </ng-template>
 
-            <ng-template swiperSlide><div class="datos-extra">
+            <ng-template swiperSlide *ngIf="data.action != 'editar'"><div class="datos-extra">
                 <h4>Imágen y enlaces</h4>
                 
                 <form [formGroup]="extraForm" id="data-form" autocomplete="off" novalidate class="datos-form">
@@ -129,7 +131,10 @@
     <div class="footer">
 
         <div class="row">
-            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK">Añadir película</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear' && data.tipo == 'movie'">Añadir película</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'editar' && data.tipo == 'movie'">Editar película</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear' && data.tipo == 'serie'">Añadir serie</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'editar' && data.tipo == 'serie'">Editar serie</button>
             <button mat-dialog-close mat-raised-button color="warn" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="cancelar()">Cancelar</button>
         </div>
     </div>
