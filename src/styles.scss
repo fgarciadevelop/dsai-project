@@ -24,8 +24,6 @@ p{
 
 router-outlet + *{
 
-    color: $color-primary;
     width: 100%;
-    height: calc(100% - 163px);
     
 }
