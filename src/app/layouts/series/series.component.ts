@@ -41,7 +41,9 @@ export class SeriesComponent implements OnInit {
 
     this.dialogOpen.afterClosed().subscribe((res: any) => {
       console.log('Cerrado', res);
-      this.series.push(res);
+      if(res != undefined){
+        this.series.push(res);
+      }
     });
 
   }

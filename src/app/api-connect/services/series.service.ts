@@ -40,4 +40,17 @@ export class SeriesService extends ApiConnectService{
     return this.http.post(`${this.baseURL}`, serie, httpOptions);
   }
 
+  public edit(serie: any){
+    console.log(serie)
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders};
+    return this.http.put(`${this.baseURL}`, serie, httpOptions);
+  }
+
+  public delete(index: string){
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders };
+    return this.http.delete(`${this.baseURL}/${index}`, httpOptions);
+  }
+
 }

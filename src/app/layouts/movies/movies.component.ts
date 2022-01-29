@@ -41,7 +41,9 @@ export class MoviesComponent implements OnInit {
 
     this.dialogOpen.afterClosed().subscribe((res: any) => {
       console.log('Cerrado', res);
-      this.movies.push(res);
+      if(res != undefined){
+        this.movies.push(res);
+      }
     });
 
   }
