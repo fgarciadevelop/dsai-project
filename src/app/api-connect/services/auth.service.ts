@@ -83,7 +83,7 @@ export class AuthService extends ApiConnectService{
       this.token = jwt_decode(this.token);
       return this.token['rol'];
     }else{
-      return null;
+      return 0;
     }
   }
 

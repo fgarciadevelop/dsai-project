@@ -22,8 +22,8 @@
                             <div class="row uno">
                                 <h1>{{serie.title}}</h1>
                                 <div class="botones">
-                                    <button mat-raised-button color="warn" (click)="deleteSerie(serie)">Borrar serie</button>
-                                    <button mat-raised-button color="primary" class="ml-1" (click)="editSerie(serie)">Editar serie</button>
+                                    <button mat-raised-button color="warn" (click)="deleteSerie(serie)" *ngIf="rol">Borrar serie</button>
+                                    <button mat-raised-button color="primary" class="ml-1" (click)="editSerie(serie)" *ngIf="rol">Editar serie</button>
                                 </div>
                             </div>
                             <div class="row dos">

@@ -23,8 +23,8 @@
                             <div class="row uno">
                                 <h1>{{movie.title}}</h1>
                                 <div class="botones">
-                                    <button mat-raised-button color="warn" (click)="deleteMovie(movie)">Borrar película</button>
-                                    <button mat-raised-button color="primary" class="ml-1" (click)="editMovie(movie)">Editar película</button>
+                                    <button mat-raised-button color="warn" (click)="deleteMovie(movie)" *ngIf="rol">Borrar película</button>
+                                    <button mat-raised-button color="primary" class="ml-1" (click)="editMovie(movie)" *ngIf="rol">Editar película</button>
                                 </div>
                             </div>
                             <div class="row dos">

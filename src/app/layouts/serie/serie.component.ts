@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
+import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { SeriesService } from 'src/app/api-connect/services/series.service';
 import { DialogFormCreateComponent } from 'src/app/shared/components/dialog-form-create/dialog-form-create.component';
 
@@ -12,6 +13,7 @@ import { DialogFormCreateComponent } from 'src/app/shared/components/dialog-form
 })
 export class SerieComponent implements OnInit {
 
+  public rol: boolean = false;
   public loading: boolean = false;
   public idSerie: string = '';
   @Input() serie: SerieModel = new SerieModel;
@@ -19,9 +21,12 @@ export class SerieComponent implements OnInit {
     private router: Router,
     private seriesService: SeriesService,
     private dialog: MatDialog,
+    private auth: AuthService,
   ) { }
 
   ngOnInit(): void {
+    let rol = this.auth.getRolFromToken();
+    rol != 0 ? this.rol = true : this.rol = false;
     if(this.serie.id == undefined){
       this.idSerie = this.router.url.split('/')[2];
     }

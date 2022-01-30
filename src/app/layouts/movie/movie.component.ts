@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
+import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { EventosService } from 'src/app/api-connect/services/eventos.service';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
 import { DialogFormCreateComponent } from 'src/app/shared/components/dialog-form-create/dialog-form-create.component';
@@ -13,6 +14,7 @@ import { DialogFormCreateComponent } from 'src/app/shared/components/dialog-form
 })
 export class MovieComponent implements OnInit {
 
+  public rol: boolean = false;
   public loading: boolean = false;
   public idMovie: string = '';
   public movieHasDirectors: boolean = false;
@@ -23,10 +25,13 @@ export class MovieComponent implements OnInit {
     private moviesService: MoviesService,
     private eventosService: EventosService,
     private dialog: MatDialog,
+    private auth: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
+    let rol = this.auth.getRolFromToken();
+    rol != 0 ? this.rol = true : this.rol = false;
     if(this.movie.id == undefined){
       this.idMovie = this.router.url.split('/')[2];
     }
