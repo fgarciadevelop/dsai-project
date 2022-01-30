@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
     if(!this.userLogged){
       this.router.navigateByUrl('inicia-sesion');
     }else{
-      console.log('Ya estás logged');
+      this.router.navigateByUrl('perfil');
     }
   }
 

@@ -20,8 +20,10 @@
         </li>
       </ul>
       <div class="boton-inicio-sesion">
-        <mat-icon *ngIf="userLogged">person</mat-icon>
-        <button mat-raised-button (click)="action()">{{userLoggedName}}</button>
+        <button mat-raised-button (click)="action()">
+          <mat-icon *ngIf="userLogged">person</mat-icon>
+          {{userLoggedName}}
+        </button>
       </div>
     </div>
 </nav>

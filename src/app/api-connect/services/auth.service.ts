@@ -68,6 +68,22 @@ export class AuthService extends ApiConnectService{
     }
   }
 
+  public getUserFromId(){
+    this.readToken();
+    return new Promise((resolve, reject) => {
+      if(this.token != null && this.token != ''){
+        let tokenDecoded: any = jwt_decode(this.token);
+        let id = tokenDecoded['id'];
+        this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+        const httpOptions = { headers: this.httpHeaders };
+        resolve(this.http.get(`${this.baseURL}/${id}`, httpOptions));
+      }else{
+        reject(undefined);
+      }
+    });
+    
+  }
+
   public isTokenExpired(): boolean{
     return true;
   }

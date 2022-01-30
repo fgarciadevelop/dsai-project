@@ -1,0 +1,38 @@
+<app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+<div class="container-fluid" *ngIf="!loading">
+    <div class="row mt-3" style="display: flex; align-items: center;">
+        <h1 class="col-10">Perfil de {{userName}}</h1>    
+        <button mat-raised-button (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Cerrar sesión
+        </button>
+    </div>
+        
+    <hr>
+    <div class="row">
+        <div class="col">
+            <h1>Datos personales</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h3>Usuario:</h3>
+            <span>{{userData.userName}}</span>
+        </div>
+        <div class="col-4">
+            <h3>Email:</h3>
+            <span>{{userData.email}}</span>
+        </div>
+        <div class="col-4">
+            <h3>Contraseña:</h3>
+            <span id="passText">{{userData.password}}</span>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="row">
+        <div class="col">
+            <h3>Permisos: nivel de <span>{{permiso}}</span></h3>
+        </div>
+    </div>
+
+</div>    
