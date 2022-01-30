@@ -1,66 +1,36 @@
 <div class="wrapper">
- 
     <!--<app-spinner *ngIf="loadingLogin">.</app-spinner>-->
     <div class="login-wrapper">
-  
       <div class="header">
-  
         <div class="logo">
-  
-          <img src="./../../../../../assets/icons/logo.png" alt="Movies logo">
-  
+          <img src="./../../../../../assets/img/logo.jpg" alt="NetFlux logo">
         </div>
-  
         <span class="title">Identifícate</span>
-  
       </div>
-  
       <div class="body">
-  
         <form id="login-form" [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-  
           <mat-form-field class="form-input">
             <input matInput type="text" placeholder="Usuario" formControlName="userName" required>
           </mat-form-field>
-  
           <mat-form-field class="form-input">
             <input matInput type="password" placeholder="Password" formControlName="password" required>
           </mat-form-field>
-    
           <div class="actions">
-  
             <div class="notice">
               <a [routerLink]="['../forgot']" class="text-info">¿Olvidaste tu contraseña?</a>
             </div>
-  
             <div class="login-actions">
-  
               <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20 login-jwt" type="submit"
                 [disabled]="!loginForm.valid">
-  
                 Acceder
-  
               </button>
-  
-              <span>¿No tienes cuenta? <a [routerLink]="['/','acceso','registro']"
+              <span>¿No tienes cuenta? <a [routerLink]="['/','registro']"
                   class="text-info link">Regístrate</a></span>
-  
             </div>
-  
           </div>
-  
         </form>
-  
       </div>
-  
       <div class="footer">
-  
       </div>
-  
     </div>
-  
-  
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-  
-  
   </div>

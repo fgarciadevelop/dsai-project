@@ -26,6 +26,10 @@ export class MenuComponent implements OnInit {
   ) { 
     this.userLoggedName = this.auth.getLoggedUser();
     this.userLoggedName == 'Inicia sesión' ? this.userLogged = false : this.userLogged = true;
+    this.eventService.getLogged().subscribe((res) => {
+      this.userLoggedName = this.auth.getLoggedUser();
+      this.userLogged = res;
+    })
   }
   
   ngOnInit(): void {

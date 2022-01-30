@@ -28,6 +28,12 @@ export class AuthService extends ApiConnectService{
     return this.http.post(`${this.baseURL}/login`, user, httpOptions);
   }
 
+  public registro(user: UserModel){
+    this.httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const httpOptions = { headers: this.httpHeaders };
+    return this.http.post(`${this.baseURL}/registro`, user, httpOptions);
+  }
+
   public isAuthenticated(){
     if(this.readToken()){
       return this.isTokenExpired();
@@ -54,7 +60,8 @@ export class AuthService extends ApiConnectService{
   public getLoggedUser(){
     if(this.readToken()){
       this.token = jwt_decode(this.token);
-      this.eventosService.setLogged(true);
+      console.log(this.token);
+      //this.eventosService.setLogged(true);
       return this.token['sub'];
     }else{
       return 'Inicia sesión';
@@ -68,6 +75,16 @@ export class AuthService extends ApiConnectService{
   public logout(){
     localStorage.removeItem('token');
     this.router.navigateByUrl('/home');
+  }
+
+  public getRolFromToken(){
+    if(localStorage.getItem('token')){
+      this.token = localStorage.getItem('token');
+      this.token = jwt_decode(this.token);
+      return this.token['rol'];
+    }else{
+      return null;
+    }
   }
 
 }
