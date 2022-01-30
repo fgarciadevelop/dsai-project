@@ -8,3 +8,11 @@
     justify-content: center;
     background-color: #9395d3 !important;
 }
+
+.boton-inicio-sesion{
+    display: flex;
+    align-items: center;
+    .mat-icon{
+        margin-right: 10px;
+    }
+}

@@ -9,6 +9,8 @@ import { MoviesComponent } from './movies/movies.component';
 import { MovieComponent } from './movie/movie.component';
 import { SerieCardComponent } from "./serie-card/serie-card.component";
 import { SeriesComponent } from "./series/series.component";
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import { SeriesComponent } from "./series/series.component";
         MovieCardComponent,
         MoviesComponent,
         MovieComponent,
+        LoginComponent,
+        RegistroComponent,
     ],
     imports: [
         GlobalModule,

@@ -1,0 +1,167 @@
+@import "./../../variables.scss";
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  .login-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 600px;
+    padding: 40px 20px;
+    background-color: $color-white;
+    box-shadow: $shadow-light-grey;
+    border-radius: 5px;
+  
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60px;
+  
+      .logo {
+        width: 100%;
+  
+        img {
+          width: 100%;
+        }
+      }
+    }
+  
+    .body {
+      text-align: center;
+      font-family: "Poppins";
+      width: auto;
+      min-width: 300px;
+  
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+  
+        .form-input {
+          width: 100%;
+  
+          input {
+            width: 100%;
+          }
+        }
+  
+        .actions {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+  
+          .login-actions {
+            width: 100%;
+            display: grid;
+  
+            .login-jwt {
+              margin-bottom: 20px;
+              margin-top: 20px;
+              height: 48px;
+            }
+  
+            span {
+              color: #455a64;
+              text-decoration: none;
+            }
+          }
+  
+          .separator {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            color: black;
+  
+            &::after {
+              content: "o";
+              position: absolute;
+              top: -14px;
+              right: calc(50% - 25px);
+              width: 40px;
+              background-color: $color-white;
+              color: $color-grey;
+              color: $color-black;
+            }
+          }
+  
+          .notice {
+            .text-info {
+              color: #455a64;
+              text-decoration: none;
+            }
+  
+            :hover {
+              color: #1e88e5;
+            }
+          }
+  
+          .social-buttons-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: 5px;
+  
+            .social-button {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              width: 100%;
+              height: 35px;
+              border-radius: 5px;
+              color: $color-white;
+              transition: $transition-button;
+              cursor: pointer;
+  
+              &.facebook {
+                background-color: $color-social-facebook-primary;
+  
+                &:hover {
+                  background-color: $color-social-facebook-secondary;
+                }
+              }
+  
+              &.google {
+                background-color: $color-social-google-primary;
+  
+                &:hover {
+                  background-color: $color-social-google-secondary;
+                }
+              }
+  
+              .social-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                border-right: 1px solid lightgrey;
+              }
+  
+              .social-text {
+                text-align: center;
+                border-left: 1px solid grey;
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .footer {}
+  }
+
+}
+

@@ -11,6 +11,9 @@ export class EventosService {
   public lateralChangeSubject: Subject<string> = new Subject<string>();
   public lateralChangeObservable$: Observable<string> = this.lateralChangeSubject.asObservable();
 
+  public loggedSubject: Subject<boolean> = new Subject<boolean>();
+  public loggedObservable$: Observable<boolean> = this.loggedSubject.asObservable();
+
   constructor() { }
 
   setLateralChange(change: string){
@@ -19,6 +22,14 @@ export class EventosService {
 
   getLateralChange(){
     return this.lateralChangeObservable$;
+  }
+
+  setLogged(logged: boolean){
+    this.loggedSubject.next(logged);
+  }
+
+  getLogged(){
+    return this.loggedObservable$;
   }
 
 }
