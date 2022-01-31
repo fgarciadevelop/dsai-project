@@ -12,6 +12,7 @@ import { SeriesComponent } from "./series/series.component";
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { ActorCardComponent } from './actor-card/actor-card.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { PerfilComponent } from './perfil/perfil.component';
         LoginComponent,
         RegistroComponent,
         PerfilComponent,
+        ActorCardComponent,
     ],
     imports: [
         GlobalModule,
