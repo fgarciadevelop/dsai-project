@@ -1,20 +1,24 @@
 <div class="barra-lateral-wrapper">
     <div class="container-destacados">
         <h1>Destacados</h1>
-        <div *ngFor="let destacado of destacados" class="item-destacado">
-            <mat-card (click)="viewElement(destacado)">
-                <mat-card-title>{{destacado.title}}</mat-card-title>
-                <img mat-card-image [src]="baseURL + destacado.imgURL">
-            </mat-card>
-        </div>
+        <perfect-scrollbar>
+            <div *ngFor="let destacado of destacados" class="item-destacado">
+                <mat-card (click)="viewElement(destacado)">
+                    <img mat-card-image [src]="baseURL + destacado.imgURL">
+                    <mat-card-title>{{destacado.title}}</mat-card-title>    
+                </mat-card>
+            </div>
+        </perfect-scrollbar>
     </div>
     <div class="container-trailers">
         <h1>Trailers</h1>
-        <div *ngFor="let trailer of trailers">
-            <mat-card (click)="viewTrailer(trailer)">
-                <mat-card-title>{{trailer.title}}</mat-card-title>
-                <img mat-card-image [src]="baseURL + trailer.imgURL">
-            </mat-card>
-        </div>
+        <perfect-scrollbar>
+            <div *ngFor="let trailer of trailers">
+                <mat-card (click)="viewTrailer(trailer)">
+                    <img mat-card-image [src]="baseURL + trailer.imgURL">
+                    <mat-card-title>{{trailer.title}}</mat-card-title>
+                </mat-card>
+            </div>
+        </perfect-scrollbar>
     </div>
 </div>
