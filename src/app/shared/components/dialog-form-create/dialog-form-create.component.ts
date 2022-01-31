@@ -339,7 +339,7 @@ export class DialogFormCreateComponent implements OnInit {
   upload(): void {
     this.progress = 0;
     this.currentFile = this.imagen;
-    this.uploadService.upload(this.currentFile).subscribe((res: any) => {
+    this.uploadService.upload(this.currentFile, 'item').subscribe((res: any) => {
       if(res.type === HttpEventType.UploadProgress){
         this.progress = Math.round(100 * res.loaded / res.total);
       }else if (res instanceof HttpResponse){

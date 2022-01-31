@@ -16,9 +16,10 @@ export class UploadService extends ApiConnectService{
     super();
   }
 
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File, tipo: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
+    formData.append('tipo', tipo);
     const req = new HttpRequest('POST', `${this.baseURL}`, formData, {
       reportProgress: true,
       responseType: 'json'
