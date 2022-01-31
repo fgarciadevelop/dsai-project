@@ -11,7 +11,7 @@
         <h3 *ngIf="data.tipo == 'serie'">Datos de la serie</h3>
         <hr>
       </div>
-      <div class="row">
+      <div class="row p-2">
           <swiper [slidesPerView]="1" [spaceBetween]="0" [navigation]="true" [centeredSlides]="true">
             
             <ng-template swiperSlide *ngIf="data.tipo == 'movie'"><div class="datos-principales">
@@ -97,7 +97,7 @@
                     </mat-form-field>
                     <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
                       <span>¿No aparece? ¡Créalo!</span>
-                      <button mat-raised-button color="primary">Crear director</button>
+                      <button mat-raised-button color="primary" (click)="createPersona('crear')">Crear director</button>
                     </div>
                   </div>
 
@@ -110,7 +110,7 @@
                     </mat-form-field>
                     <div class="col-12 col-md-6 col-lg-4 nuevo-actor">
                       <span>¿No aparece? ¡Créalo!</span>
-                      <button mat-raised-button color="primary">Crear actor</button>
+                      <button mat-raised-button color="primary" (click)="createPersona('crear')">Crear actor</button>
                     </div>
                   </div>
           

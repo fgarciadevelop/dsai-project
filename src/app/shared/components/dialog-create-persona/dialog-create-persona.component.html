@@ -1,0 +1,56 @@
+<app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+<div class="wrapper dialog" *ngIf="!loading">
+    <div class="header">
+        <h1>Nuevo creador</h1>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <h3>Datos de la persona</h3>
+        <hr>
+      </div>
+      <div class="row p-2">
+        <perfect-scrollbar>
+            <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+                <div class="linea">
+                  <mat-form-field class="form-input">
+                    <input class="campoForm" matInput type="text" placeholder="Nombre completo" formControlName="name">
+                  </mat-form-field>
+                </div>
+                <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload style="display: none;">
+                  <div class="file-upload">
+                    {{fileName || "Selecciona una imagen para el actor/director."}}
+                      <button mat-mini-fab color="primary" class="upload-btn"
+                        (click)="fileUpload.click()">
+                          <mat-icon>attach_file</mat-icon>
+                      </button>
+                  </div>
+                  <div *ngIf="currentFile" class="progress my-3">
+                    <div
+                      class="progress-bar progress-bar-info progress-bar-striped"
+                      role="progressbar"
+                      attr.aria-valuenow="{{ progress }}"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      [ngStyle]="{ width: progress + '%' }"
+                    >
+                      {{ progress }}%
+                    </div>
+                  </div>
+                  <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
+            </form>
+                
+            </perfect-scrollbar>
+      </div>
+
+    </div>
+
+    <div class="footer">
+
+        <div class="row">
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear'">Añadir</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'editar'">Editar</button>
+            <button mat-dialog-close mat-raised-button color="warn" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="cancelar()">Cancelar</button>
+        </div>
+    </div>
+</div>

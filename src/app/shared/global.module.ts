@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFileUploadModule } from "angular-material-fileupload";
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DialogCreatePersonaComponent } from './components/dialog-create-persona/dialog-create-persona.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -50,6 +51,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       FooterComponent,
       DialogFormCreateComponent,
       SpinnerComponent,
+      DialogCreatePersonaComponent,
     ],
     exports: [
       DialogFormCreateComponent,

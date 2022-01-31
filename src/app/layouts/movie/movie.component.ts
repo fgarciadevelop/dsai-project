@@ -67,7 +67,9 @@ export class MovieComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((res:any) => {
-      this.movie = res;
+      if(res != undefined){
+        this.movie = res;
+      }
     })
   }
 

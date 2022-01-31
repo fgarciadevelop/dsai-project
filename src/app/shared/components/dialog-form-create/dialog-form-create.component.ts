@@ -18,6 +18,7 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
 import { ExtraService } from 'src/app/api-connect/services/extra.service';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
+import { DialogCreatePersonaComponent } from '../dialog-create-persona/dialog-create-persona.component';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface DialogFormCreate{
@@ -56,6 +57,8 @@ export interface DialogFormCreate{
   styleUrls: ['./dialog-form-create.component.scss']
 })
 export class DialogFormCreateComponent implements OnInit {
+
+  public dialogOpen: any;
 
   public currentFile?: File;
   public progress: number = 0;
@@ -115,6 +118,7 @@ export class DialogFormCreateComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private extraService: ExtraService,
+    private dialogPersona: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -356,6 +360,25 @@ export class DialogFormCreateComponent implements OnInit {
 
   cambio(event: any){
     console.log(event)
+  }
+
+  createPersona(action: string){
+    this.dialogOpen = this.dialogPersona.open(DialogCreatePersonaComponent,{
+      data:{
+        action: action,
+        persona: {
+          id: 0,
+          name: '',
+          imgUrl: ''
+        }
+      }  
+    })
+    this.dialogOpen.afterClosed().subscribe((res: any) => {
+      console.log('Cerrado', res);
+      if(res != undefined){
+        this.personas.push(res);
+      }
+    });
   }
 
  }
