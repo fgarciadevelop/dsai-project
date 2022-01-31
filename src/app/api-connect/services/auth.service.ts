@@ -90,6 +90,7 @@ export class AuthService extends ApiConnectService{
 
   public logout(){
     localStorage.removeItem('token');
+    this.eventosService.setLogged(false);
     this.router.navigateByUrl('/home');
   }
 

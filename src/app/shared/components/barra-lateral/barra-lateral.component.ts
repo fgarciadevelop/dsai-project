@@ -27,6 +27,7 @@ export class BarraLateralComponent implements OnInit {
     });
     this.especialService.getTrailers().subscribe((trailers: any) => {
       this.trailers = trailers;
+      console.log(trailers);
     })
   }
 
