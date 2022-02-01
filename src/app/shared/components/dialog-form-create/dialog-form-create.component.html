@@ -80,6 +80,45 @@
                     
                 </perfect-scrollbar>
             </div></ng-template>
+            <ng-template swiperSlide *ngIf="data.tipo == 'trailer'"><div class="datos-principales">
+              <perfect-scrollbar>
+                <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+                    <div class="linea">
+                      <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="Título del trailer" formControlName="title">
+                      </mat-form-field>
+                    </div>
+                    <div class="linea">
+                      <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="URL del trailer" formControlName="url">
+                      </mat-form-field>
+                    </div>
+
+                    <input type="file" id="imageUpload" class="file-input" (change)="onFileSelected($event)" #fileUpload style="display: none;">
+                    <div class="file-upload">
+                      {{fileName || "Selecciona una imagen para la película."}}
+                        <button mat-mini-fab color="primary" class="upload-btn"
+                          (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+                    </div>
+  
+                    <div *ngIf="currentFile" class="progress my-3">
+                      <div
+                        class="progress-bar progress-bar-info progress-bar-striped"
+                        role="progressbar"
+                        attr.aria-valuenow="{{ progress }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        [ngStyle]="{ width: progress + '%' }"
+                      >
+                        {{ progress }}%
+                      </div>
+                    </div>
+                </form>
+                    
+                </perfect-scrollbar>
+            </div></ng-template>
 
             <ng-template swiperSlide *ngIf="data.tipo == 'movie'">
               <div class="datos-cast">
@@ -155,7 +194,7 @@
               </div>
             </ng-template>
 
-            <ng-template swiperSlide *ngIf="data.action != 'editar'"><div class="datos-extra">
+            <ng-template swiperSlide *ngIf="data.action != 'editar' && data.tipo != 'trailer'"><div class="datos-extra">
                 <h4>Imágen y enlaces</h4>
                 
                 <form [formGroup]="extraForm" id="data-form" autocomplete="off" novalidate class="datos-form">
@@ -201,6 +240,8 @@
     <div class="footer">
 
         <div class="row">
+          <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear' && data.tipo == 'trailer'">Añadir película</button>
+            <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'editar' && data.tipo == 'trailer'">Editar película</button>
             <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear' && data.tipo == 'movie'">Añadir película</button>
             <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'editar' && data.tipo == 'movie'">Editar película</button>
             <button mat-raised-button color="primary" class="col-10 col-md-5 col-lg-5 mb-1" type="submit" (click)="guardarForm()" [disabled]="!buttonOK" *ngIf="data.action == 'crear' && data.tipo == 'serie'">Añadir serie</button>

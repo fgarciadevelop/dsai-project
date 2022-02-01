@@ -10,6 +10,7 @@ import { PerfilComponent } from "./perfil/perfil.component";
 import { RegistroComponent } from "./registro/registro.component";
 import { SerieComponent } from "./serie/serie.component";
 import { SeriesComponent } from "./series/series.component";
+import { TrailersComponent } from "./trailers/trailers.component";
 
 const routes: Routes = [
 
@@ -26,6 +27,7 @@ const routes: Routes = [
         { path: 'inicia-sesion', component: LoginComponent },
         { path: 'registro', component: RegistroComponent },
         { path: 'perfil', component: PerfilComponent },
+        { path: 'trailers', component: TrailersComponent },
         { path: '**', pathMatch: 'full', redirectTo: 'home/inicio'},
 
       ]

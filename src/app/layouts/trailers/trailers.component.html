@@ -1,1 +1,17 @@
-<p>trailers works!</p>
+<perfect-scrollbar>
+    <app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+    <div class="container-fluid"*ngIf="!loading">
+        <div class="row header">
+            <div class="col-6 col-md-9 col-lg-10 titulo">
+                <h1>Trailers</h1>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 boton-container" *ngIf="rol">
+                <button mat-raised-button color="primary" (click)="addTrailer()">Añadir trailer</button>
+            </div>
+        </div>
+        <div class="row body">
+            <app-trailers-card class="col-12 col-md-6 col-lg-3" *ngFor="let trailer of trailers" [trailer]="trailer"></app-trailers-card>
+        </div>
+        <div class="row footer"></div>
+    </div>
+</perfect-scrollbar>

@@ -85,6 +85,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatProgressBarModule,
       YouTubePlayerModule,
       ToastrModule,
+      TrailersCardComponent,
     ],
     providers: [{
         provide: PERFECT_SCROLLBAR_CONFIG,

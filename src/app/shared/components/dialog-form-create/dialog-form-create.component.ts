@@ -7,18 +7,17 @@ import { MoviesService } from 'src/app/api-connect/services/movies.service';
 import { PersonasService } from 'src/app/api-connect/services/personas.service';
 import { SeriesService } from 'src/app/api-connect/services/series.service';
 
-import { Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, SwiperOptions } from 'swiper';
-import { Observable } from 'rxjs';
 import { UploadService } from 'src/app/api-connect/services/upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { textChangeRangeIsUnchanged } from 'typescript';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
 import { ExtraService } from 'src/app/api-connect/services/extra.service';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
 import { DialogCreatePersonaComponent } from '../dialog-create-persona/dialog-create-persona.component';
+import { TrailerModel } from 'src/app/api-connect/models/trailer.model';
+import { EspecialService } from 'src/app/api-connect/services/especial.service';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 export interface DialogFormCreate{
@@ -47,6 +46,12 @@ export interface DialogFormCreate{
     seasons: number,
     creators: any[],
     cast: any[],
+  },
+  trailer: {
+    id: string,
+    title: string,
+    url: string,
+    imgUrl: string,
   }
 
 }
@@ -113,6 +118,7 @@ export class DialogFormCreateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogFormCreate,
     private moviesService: MoviesService,
     private seriesService: SeriesService,
+    private especialService: EspecialService,
     private personasService: PersonasService,
     private uploadService: UploadService,
     private router: Router,
@@ -168,6 +174,11 @@ export class DialogFormCreateComponent implements OnInit {
   
         this.extraForm = this.fb.group({
           url: new FormControl(this.data.pelicula.url),
+        });
+      }else if(this.data.tipo == 'trailer'){
+        this.dataForm = this.fb.group({
+          title: new FormControl(this.data.trailer.title, [Validators.required]),
+          url: new FormControl(this.data.trailer.url, [Validators.required]),
         });
       }
 
@@ -232,6 +243,12 @@ export class DialogFormCreateComponent implements OnInit {
             this.dialogRef.close(res);
           })
           break;
+        case 'trailer':
+          this.especialService.createTrailer(item.dataTrailer).subscribe((res) => {
+            console.log(res);
+            this.dialogRef.close(res);
+          })
+          break;
       }
     });
   }
@@ -261,6 +278,12 @@ export class DialogFormCreateComponent implements OnInit {
           this.dialogRef.close(res);
         })
         break;
+      case 'trailer':
+        this.especialService.editTrailer(item.dataTrailer).subscribe((res) => {
+          console.log(res);
+          this.dialogRef.close(res);
+        })
+        break;        
     }
   }
 
@@ -289,6 +312,12 @@ export class DialogFormCreateComponent implements OnInit {
       creators: undefined,
       cast: undefined
     };
+    let dataTrailer: TrailerModel = {
+      id: undefined,
+      title: undefined,
+      url: undefined,
+      imgURL: undefined
+    }
     switch(this.data.tipo){
       case 'movie':
         dataMovie.title = this.dataForm.get('title')?.value;
@@ -311,13 +340,18 @@ export class DialogFormCreateComponent implements OnInit {
         dataSerie.imgURL = this.data.serie.imgURL;
         dataSerie.id = this.data.serie.id;
         break;
+      case 'trailer':
+        dataTrailer.title = this.dataForm.get('title')?.value;
+        dataTrailer.url = this.dataForm.get('url')?.value;
+        dataTrailer.imgURL = this.data.trailer.imgUrl;
+        break;
     }
     switch(this.data.action){
       case 'crear':
-        this.createItem(this.data.tipo, {dataMovie, dataSerie});
+        this.createItem(this.data.tipo, {dataMovie, dataSerie, dataTrailer});
         break;
       case 'editar':
-        this.editItem(this.data.tipo, {dataMovie, dataSerie});
+        this.editItem(this.data.tipo, {dataMovie, dataSerie, dataTrailer});
         break;
     }
   }
@@ -338,23 +372,41 @@ export class DialogFormCreateComponent implements OnInit {
   upload(): void {
     this.progress = 0;
     this.currentFile = this.imagen;
-    this.uploadService.upload(this.currentFile, 'item').subscribe((res: any) => {
-      if(res.type === HttpEventType.UploadProgress){
-        this.progress = Math.round(100 * res.loaded / res.total);
-      }else if (res instanceof HttpResponse){
-        if(this.data.tipo == 'movie'){
-          this.data.pelicula.imgURL = '/img/' + res.body + '.jpg';
-        }else if(this.data.tipo == 'serie'){
-          this.data.serie.imgURL = '/img/' + res.body + '.jpg';
+    if(this.data.tipo == 'trailer'){
+      this.uploadService.upload(this.currentFile, 'trailer').subscribe((res: any) => {
+        if(res.type === HttpEventType.UploadProgress){
+          this.progress = Math.round(100 * res.loaded / res.total);
+        }else if (res instanceof HttpResponse){
+          this.data.trailer.imgUrl = '/img/' + res.body + '.jpg';
+          this.buttonOK = true;
         }
-        this.buttonOK = true;
-      }
-    },
-    (err: any) => {
-      console.log(err);
-      this.progress = 0;
-      this.currentFile = undefined;
-    })
+      },
+      (err: any) => {
+        console.log(err);
+        this.progress = 0;
+        this.currentFile = undefined;
+      })
+    }else{
+      this.uploadService.upload(this.currentFile, 'item').subscribe((res: any) => {
+        if(res.type === HttpEventType.UploadProgress){
+          this.progress = Math.round(100 * res.loaded / res.total);
+        }else if (res instanceof HttpResponse){
+          if(this.data.tipo == 'movie'){
+            this.data.pelicula.imgURL = '/img/' + res.body + '.jpg';
+          }else if(this.data.tipo == 'serie'){
+            this.data.serie.imgURL = '/img/' + res.body + '.jpg';
+          }else if(this.data.tipo == 'trailer'){
+            this.data.trailer.imgUrl = '/img/' + res.body + '.jpg';
+          }
+          this.buttonOK = true;
+        }
+      },
+      (err: any) => {
+        console.log(err);
+        this.progress = 0;
+        this.currentFile = undefined;
+      })
+    }
   }
 
   cambio(event: any){
