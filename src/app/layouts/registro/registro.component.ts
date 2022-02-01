@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/api-connect/models/user.model';
 import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { EventosService } from 'src/app/api-connect/services/eventos.service';
@@ -22,7 +23,7 @@ export class RegistroComponent implements OnInit {
 
   constructor(
     public router: Router,
-    //private toastr: ToastrService,
+    private toastr: ToastrService,
     private fb: FormBuilder,
     private auth: AuthService,
     private eventosService: EventosService,
@@ -62,10 +63,8 @@ export class RegistroComponent implements OnInit {
         this.auth.saveToken(res);
         this.loadingLogin = false;
         this.router.navigateByUrl('');
-        /**
-         * this.toastr.clear();
-          this.toastr.success('Bienvenido ' + this.user.email, 'Login correcto' );
-         */
+        this.toastr.clear();
+        this.toastr.success('Bienvenido ' + this.user.email, 'Login correcto' );
       },(err) => {
         console.log(err);
         if(err.status == 200){
@@ -76,8 +75,8 @@ export class RegistroComponent implements OnInit {
         }
       });
     } else {
-  /*      this.toastr.clear();
-      this.toastr.success('Email o contraseña no válidos.', 'Login incorrecto' );*/
+      this.toastr.clear();
+      this.toastr.success('Email, usuario o contraseña no válidos.', 'Registro incorrecto' );
     }
   }
 

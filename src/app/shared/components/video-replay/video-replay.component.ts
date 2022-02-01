@@ -1,5 +1,6 @@
 import { Component, Inject, NgModule, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 export interface VideoData{
   src: string,
@@ -16,7 +17,9 @@ export class VideoReplayComponent implements OnInit {
   public id = '';
 
   constructor(
+    public dialogRef: MatDialogRef<VideoReplayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: VideoData,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -27,9 +30,15 @@ export class VideoReplayComponent implements OnInit {
 
   public loadVideo(){
     this.id = this.data.src.split('/')[3];
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.body.appendChild(tag);
+    if(this.id == ''){
+      this.toastr.clear();
+      this.toastr.error('La url del vídeo es incorrecta.', 'Error cargando trailer' );
+      this.dialogRef.close();
+    }else{
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+    }
     this.loading = false;
   }
 

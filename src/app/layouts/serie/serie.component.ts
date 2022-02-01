@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
 import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { SeriesService } from 'src/app/api-connect/services/series.service';
@@ -22,9 +23,11 @@ export class SerieComponent implements OnInit {
     private seriesService: SeriesService,
     private dialog: MatDialog,
     private auth: AuthService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     let rol = this.auth.getRolFromToken();
     rol != 0 ? this.rol = true : this.rol = false;
     if(this.serie.id == undefined){
@@ -32,7 +35,13 @@ export class SerieComponent implements OnInit {
     }
     this.seriesService.get(this.idSerie).subscribe((serie: any) => {
       this.serie = serie;
-      console.log(serie);
+      if(this.serie != null){
+        this.loading = false;
+      }else{
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error en el servidor.', 'Error al cargar la serie' );
+        this.router.navigateByUrl('home');
+      }
     });
   }
 
@@ -40,8 +49,15 @@ export class SerieComponent implements OnInit {
     this.loading = true;
     console.log('Borrando esta película: ', serie);
     this.seriesService.delete(serie.id!).subscribe((res) => {
+      if(res == undefined){
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error en el servidor.', 'Error al borrar la serie' );
+      }else{
+        this.toastr.clear();
+        this.toastr.success('Serie borrada correctamente' );
+        this.router.navigateByUrl('home');
+      }
       this.loading = false;
-      this.router.navigateByUrl('home');
     })
   }
 
@@ -57,7 +73,17 @@ export class SerieComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((res:any) => {
-      this.serie = res;
+      if(res == undefined){
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error con alguno de los datos introducidos.', 'Error al editar la serie' );
+      }else if(res == 'cerrado'){
+        this.toastr.clear();
+        this.toastr.warning('Ha cerrado la edición sin guardar' );
+      }else{
+        this.serie = res;
+        this.toastr.clear();
+        this.toastr.success('Serie editada correctamente' );
+      }
     })
   }
 

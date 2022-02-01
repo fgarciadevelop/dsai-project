@@ -6,6 +6,7 @@ import { GlobalModule } from './shared/global.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordPipe } from './pipes/password.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PasswordPipe } from './pipes/password.pipe';
     GlobalModule,
     NgbModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

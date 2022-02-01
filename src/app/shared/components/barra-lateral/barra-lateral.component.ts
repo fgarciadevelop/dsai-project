@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { DestacadoModel } from 'src/app/api-connect/models/destacado.model';
 import { TrailerModel } from 'src/app/api-connect/models/trailer.model';
 import { EspecialService } from 'src/app/api-connect/services/especial.service';
@@ -25,6 +26,7 @@ export class BarraLateralComponent implements OnInit {
     private especialService: EspecialService,
     private router: Router,
     private dialogVideo: MatDialog,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -46,15 +48,19 @@ export class BarraLateralComponent implements OnInit {
 
   viewTrailer(trailer: TrailerModel){
     console.log(trailer)
-    //open modal youtube vision
-    this.dialogOpen = this.dialogVideo.open(VideoReplayComponent,{
-      data:{
-        src: trailer.url
-      }  
-    })
-    this.dialogOpen.afterClosed().subscribe((res: any) => {
-      console.log('Cerrado', res);
-    });
+    if(trailer == undefined || trailer.url == ''){
+      this.toastr.clear();
+      this.toastr.error('El trailer no tiene una url correcta.', 'Error al abrir el trailer' );
+    }else{
+      this.dialogOpen = this.dialogVideo.open(VideoReplayComponent,{
+        data:{
+          src: trailer.url
+        }  
+      })
+      this.dialogOpen.afterClosed().subscribe((res: any) => {
+        console.log('Cerrado', res);
+      });
+    }
   }
 
 }

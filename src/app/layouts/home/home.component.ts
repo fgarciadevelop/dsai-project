@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
@@ -18,16 +19,23 @@ export class HomeComponent {
   constructor(
     private moviesService: MoviesService,
     private seriesService: SeriesService,
+    private toastr: ToastrService
   ){}
 
   ngOnInit(){
     this.moviesService.getNovedades().subscribe((movies: any) => { 
       this.movies = movies;
-      console.log(movies); 
+      if(this.movies.length == 0){
+        this.toastr.clear();
+        this.toastr.error('Hubo un problema en la conexión con el servidor.', 'Error al cargar las películas');
+      }
     });
     this.seriesService.getNovedades().subscribe((series: any) => { 
       this.series = series;
-      console.log(series); 
+      if(this.series.length == 0){
+        this.toastr.clear();
+        this.toastr.error('Hubo un problema en la conexión con el servidor.', 'Error al cargar las series');
+      }
     });
   }
 

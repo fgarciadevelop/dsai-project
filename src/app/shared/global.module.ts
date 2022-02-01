@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DialogCreatePersonaComponent } from './components/dialog-create-persona/dialog-create-persona.component';
 import { VideoReplayComponent } from './components/video-replay/video-replay.component';
 import { YouTubePlayerModule } from "@angular/youtube-player";
+import { ToastrModule } from "ngx-toastr";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -45,6 +46,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatIconModule,
       MatProgressBarModule,
       YouTubePlayerModule,
+      ToastrModule,
     ],
     declarations: [
       HeaderComponent,
@@ -78,6 +80,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatIconModule,
       MatProgressBarModule,
       YouTubePlayerModule,
+      ToastrModule,
     ],
     providers: [{
         provide: PERFECT_SCROLLBAR_CONFIG,

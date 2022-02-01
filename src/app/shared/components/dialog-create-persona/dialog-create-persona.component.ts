@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { PersonaModel } from 'src/app/api-connect/models/persona.model';
 import { ExtraService } from 'src/app/api-connect/services/extra.service';
 import { MoviesService } from 'src/app/api-connect/services/movies.service';
@@ -45,6 +46,7 @@ export class DialogCreatePersonaComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private extraService: ExtraService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -102,13 +104,20 @@ export class DialogCreatePersonaComponent implements OnInit {
     };
     console.log(dataPersona);
     this.personasService.create(dataPersona).subscribe((res) => {
-      console.log(res);
+      if(res){
+        this.toastr.clear();
+        this.toastr.success('Persona creada correctamente' );
+      }else{
+        this.toastr.clear();
+        this.toastr.error('Error creando persona' );
+      }
       this.dialogRef.close(res);
     })
   }
 
   public cancelar(){
-    console.log(this.dialogRef);
+    this.toastr.clear();
+    this.toastr.warning('No se ha creado la persona.' );
     this.dialogRef.close();
   }
   

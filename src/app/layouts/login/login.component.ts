@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/api-connect/models/user.model';
 import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { EventosService } from 'src/app/api-connect/services/eventos.service';
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public router: Router,
-    //private toastr: ToastrService,
+    private toastr: ToastrService,
     private fb: FormBuilder,
     private auth: AuthService,
     private eventosService: EventosService,
@@ -63,10 +64,8 @@ export class LoginComponent implements OnInit {
         this.auth.saveToken(res);
         this.loadingLogin = false;
         this.router.navigateByUrl('');
-        /**
-         * this.toastr.clear();
-          this.toastr.success('Bienvenido ' + this.user.email, 'Login correcto' );
-         */
+        this.toastr.clear();
+        this.toastr.success('Bienvenido ' + this.user.userName, 'Login correcto' );
       },(err) => {
         console.log(err);
         if(err.status == 200){
@@ -74,11 +73,14 @@ export class LoginComponent implements OnInit {
           this.eventosService.setLogged(true);
           this.loadingLogin = false;
           this.router.navigateByUrl('');
+        }else if(err.status == 400){
+          this.toastr.clear();
+          this.toastr.error('Usuario o contraseña no válidos.', 'Login incorrecto' );    
         }
       });
     } else {
-  /*      this.toastr.clear();
-      this.toastr.success('Email o contraseña no válidos.', 'Login incorrecto' );*/
+      this.toastr.clear();
+      this.toastr.error('Usuario o contraseña no válidos.', 'Login incorrecto' );
     }
   }
 

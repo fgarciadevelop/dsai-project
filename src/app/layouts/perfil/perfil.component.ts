@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserModel } from 'src/app/api-connect/models/user.model';
 import { AuthService } from 'src/app/api-connect/services/auth.service';
 
@@ -24,15 +25,14 @@ export class PerfilComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private fb: FormBuilder,
+    private toastr: ToastrService,
   ) { 
     this.loading = true;
     if(!this.auth.isAuthenticated()){
       this.router.navigateByUrl('home');
     }else{
-      document.getElementById('passwordText')
       this.userName = this.auth.getLoggedUser();
       this.auth.getUserFromId().then((res: any) => {
-        console.log(res);
         res.subscribe((res2: any) =>{
           console.log(res2)
           this.userData = res2;
@@ -43,6 +43,9 @@ export class PerfilComponent implements OnInit {
           }
           this.loadForm();
         })
+      },(err) => {
+        this.toastr.clear();
+      this.toastr.error('Se produjo un error en el servidor.', 'Error al cargar los datos' );
       })
     }
   }

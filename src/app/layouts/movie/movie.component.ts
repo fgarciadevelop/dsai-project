@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { MovieModel } from 'src/app/api-connect/models/movie.model';
 import { AuthService } from 'src/app/api-connect/services/auth.service';
 import { EventosService } from 'src/app/api-connect/services/eventos.service';
@@ -17,15 +18,14 @@ export class MovieComponent implements OnInit {
   public rol: boolean = false;
   public loading: boolean = false;
   public idMovie: string = '';
-  public movieHasDirectors: boolean = false;
   @Input() movie: MovieModel = new MovieModel;
 
   constructor(
     private router: Router,
     private moviesService: MoviesService,
-    private eventosService: EventosService,
     private dialog: MatDialog,
     private auth: AuthService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -37,10 +37,11 @@ export class MovieComponent implements OnInit {
     }
     this.moviesService.get(this.idMovie).subscribe((movie: any) => {
       this.movie = movie;
-      console.log(movie);
       if(this.movie != null){
         this.loading = false;
       }else{
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error en el servidor.', 'Error al cargar la película' );
         this.router.navigateByUrl('home');
       }
     })
@@ -48,15 +49,20 @@ export class MovieComponent implements OnInit {
 
   deleteMovie(movie: MovieModel){
     this.loading = true;
-    console.log('Borrando esta película: ', movie);
     this.moviesService.delete(movie.id!).subscribe((res) => {
+      if(res == undefined){
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error en el servidor.', 'Error al borrar la película' );
+      }else{
+        this.toastr.clear();
+        this.toastr.success('Pelicula borrada correctamente' );
+        this.router.navigateByUrl('home');
+      }
       this.loading = false;
-      this.router.navigateByUrl('home');
-    })
+    });
   }
 
   editMovie(movie: MovieModel){
-    console.log('Editando esta película: ', movie);
     let dialogRef = this.dialog.open(DialogFormCreateComponent,{
       data:{
         action: 'editar',
@@ -65,12 +71,20 @@ export class MovieComponent implements OnInit {
         pelicula: movie,
         serie: {}
       }
-    })
+    });
     dialogRef.afterClosed().subscribe((res:any) => {
-      if(res != undefined){
+      if(res == undefined){
+        this.toastr.clear();
+        this.toastr.error('Se produjo un error con alguno de los datos introducidos.', 'Error al editar la película' );
+      }else if(res == 'cerrado'){
+        this.toastr.clear();
+        this.toastr.warning('Ha cerrado la edición sin guardar' );
+      }else{
         this.movie = res;
+        this.toastr.clear();
+        this.toastr.success('Pelicula editada correctamente' );
       }
-    })
+    });
   }
 
 }

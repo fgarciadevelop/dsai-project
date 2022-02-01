@@ -323,8 +323,7 @@ export class DialogFormCreateComponent implements OnInit {
   }
 
   public cancelar(){
-    console.log(this.dialogRef);
-    this.dialogRef.close();
+    this.dialogRef.close('cerrado');
   }
 
   onFileSelected(event: any){

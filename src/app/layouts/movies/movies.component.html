@@ -1,5 +1,6 @@
 <perfect-scrollbar>
-    <div class="container-fluid">
+    <app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+    <div class="container-fluid"*ngIf="!loading">
         <div class="row header">
             <div class="col-6 col-md-9 col-lg-10 titulo">
                 <h1>Películas</h1>

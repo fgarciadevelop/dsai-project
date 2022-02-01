@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SerieModel } from 'src/app/api-connect/models/serie.model';
 import { SeriesService } from 'src/app/api-connect/services/series.service';
 
@@ -15,14 +16,18 @@ export class SerieCardComponent implements OnInit {
   constructor(
     private seriesService: SeriesService,
     private router: Router,
+    private toastr: ToastrService,
   ) { 
   }
 
   ngOnInit(): void {
     if(this.serie.id == undefined){
       this.seriesService.get(this.router.url.split('/')[2]).subscribe((serie: any) => {
-        console.log('Serie: ', serie);
         this.serie = serie;
+        if(this.serie == undefined){
+          this.toastr.clear();
+          this.toastr.error('Hubo un problema en la conexión con el servidor.', 'Error al cargar los datos de la serie');
+        }
       })
     }
   }
