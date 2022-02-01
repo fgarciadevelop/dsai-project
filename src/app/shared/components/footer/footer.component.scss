@@ -1,6 +1,4 @@
 .wrapper-footer{
-    background-color: #A2A3BB;
-    border-top: 3px solid black;
     .row{
         .col-sm-2{
             padding: 5px;
@@ -14,4 +12,10 @@
             }
         }
     }
+}
+
+perfect-scrollbar{
+    height: 100% !important;
+    background-color: #A2A3BB;
+    border-top: 3px solid black;
 }

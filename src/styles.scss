@@ -8,7 +8,13 @@
 html, body { 
     height: 100%;
     width: 100%;
-     }
+    margin:0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+
+}
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
@@ -25,5 +31,17 @@ p{
 router-outlet + *{
 
     width: 100%;
+    display: block;
+    height: calc(100% - 228px);
+    perfect-scrollbar{
+        display: block;
+        height: 100%;
+    }
     
+}
+
+app-core{
+    display: block;
+    width: 100%;
+    height: 100%;
 }

@@ -1,57 +1,59 @@
-<app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
-<div class="container-fluid" *ngIf="!loading">
-    <div class="row pt-3" style="display: flex; align-items: center;">
-        <h1 class="col-12 col-md-8 col-lg-9">Perfil de {{userName}}</h1>    
-        <button mat-raised-button (click)="logout()" class="col-8 col-md-3 col-lg-2 ml-5">
-            <mat-icon>logout</mat-icon>
-            Cerrar sesión
-        </button>
-    </div>
-        
-    <hr>
-    <div class="row">
-        <div class="col">
-            <h1>Datos personales</h1>
+<perfect-scrollbar>
+    <app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+    <div class="container-fluid" *ngIf="!loading">
+        <div class="row pt-3" style="display: flex; align-items: center;">
+            <h1 class="col-12 col-md-8 col-lg-9">Perfil de {{userName}}</h1>    
+            <button mat-raised-button (click)="logout()" class="col-8 col-md-3 col-lg-2 ml-5">
+                <mat-icon>logout</mat-icon>
+                Cerrar sesión
+            </button>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 formulario">
-            <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
-                <div class="row">
-                    <mat-form-field class="form-input">
-                        <input class="campoForm" matInput type="text" placeholder="Nombre de usuario" formControlName="userName">
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <mat-form-field class="form-input">
-                        <input class="campoForm" matInput type="text" placeholder="Introduce tu email" formControlName="email">
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <mat-form-field class="form-input">
-                        <input class="campoForm" matInput [type]="!seePass ? 'password' : 'text'" placeholder="Escribe la contraseña" formControlName="password">
-                    </mat-form-field>                   
-                </div>
-                <div class="row">
-                    <mat-form-field class="form-input">
-                        <input class="campoForm" matInput type="text" placeholder="Repite la contraseña" formControlName="repeatPassword">
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <button mat-raised-button color="warn" (click)="changeVisibility()" class="ml-2">
-                        <span class="mr-3">Ver contraseña</span>
-                        <mat-icon *ngIf="!seePass">visibility</mat-icon>
-                        <mat-icon *ngIf="seePass">visibility_off</mat-icon>
-                    </button>
-                </div>
-            </form>
+            
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h1>Datos personales</h1>
+            </div>
         </div>
-    </div>
-    <br><br><br>
-    <div class="row">
-        <div class="col">
-            <h3>Permisos: nivel de <span>{{permiso}}</span></h3>
+        <div class="row">
+            <div class="col-12 formulario">
+                <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+                    <div class="row">
+                        <mat-form-field class="form-input">
+                            <input class="campoForm" matInput type="text" placeholder="Nombre de usuario" formControlName="userName">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-input">
+                            <input class="campoForm" matInput type="text" placeholder="Introduce tu email" formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-input">
+                            <input class="campoForm" matInput [type]="!seePass ? 'password' : 'text'" placeholder="Escribe la contraseña" formControlName="password">
+                        </mat-form-field>                   
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="form-input">
+                            <input class="campoForm" matInput type="text" placeholder="Repite la contraseña" formControlName="repeatPassword">
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <button mat-raised-button color="warn" (click)="changeVisibility()" class="ml-2">
+                            <span class="mr-3">Ver contraseña</span>
+                            <mat-icon *ngIf="!seePass">visibility</mat-icon>
+                            <mat-icon *ngIf="seePass">visibility_off</mat-icon>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <br><br><br>
+        <div class="row">
+            <div class="col">
+                <h3>Permisos: nivel de <span>{{permiso}}</span></h3>
+            </div>
+        </div>
+    
     </div>
-
-</div>
+</perfect-scrollbar>
