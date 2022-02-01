@@ -15,17 +15,36 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-4">
-            <h3>Usuario:</h3>
-            <span>{{userData.userName}}</span>
-        </div>
-        <div class="col-12 col-md-4">
-            <h3>Email:</h3>
-            <span>{{userData.email}}</span>
-        </div>
-        <div class="col-12 col-md-4">
-            <h3>Contraseña:</h3>
-            <span id="passText">{{userData.password}}</span>
+        <div class="col-12 formulario">
+            <form [formGroup]="dataForm" id="data-form" autocomplete="off" novalidate class="datos-form">
+                <div class="row">
+                    <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="Nombre de usuario" formControlName="userName">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="Introduce tu email" formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="form-input">
+                        <input class="campoForm" matInput [type]="!seePass ? 'password' : 'text'" placeholder="Escribe la contraseña" formControlName="password">
+                    </mat-form-field>                   
+                </div>
+                <div class="row">
+                    <mat-form-field class="form-input">
+                        <input class="campoForm" matInput type="text" placeholder="Repite la contraseña" formControlName="repeatPassword">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <button mat-raised-button color="warn" (click)="changeVisibility()" class="ml-2">
+                        <span class="mr-3">Ver contraseña</span>
+                        <mat-icon *ngIf="!seePass">visibility</mat-icon>
+                        <mat-icon *ngIf="seePass">visibility_off</mat-icon>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     <br><br><br>
