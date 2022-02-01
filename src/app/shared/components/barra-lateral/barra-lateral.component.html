@@ -2,12 +2,7 @@
     <div class="container-destacados">
         <h1>Destacados</h1>
         <perfect-scrollbar>
-            <div *ngFor="let destacado of destacados" class="item-destacado">
-                <mat-card (click)="viewElement(destacado)">
-                    <img mat-card-image [src]="baseURL + destacado.imgURL">
-                    <mat-card-title>{{destacado.title}}</mat-card-title>    
-                </mat-card>
-            </div>
+            <app-destacado-card [destacado]="destacado" *ngFor="let destacado of destacados"></app-destacado-card>
         </perfect-scrollbar>
     </div>
     <div class="container-trailers">

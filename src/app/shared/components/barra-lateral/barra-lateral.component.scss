@@ -9,20 +9,7 @@
     }
 
     .container-destacados{
-        border-bottom: 0px solid black;   
-        mat-card{
-            border: 1px solid black;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }                                                                  
-    }
-
-    .container-trailers{
-        mat-card{
-            border: 1px solid black;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }  
+        border-bottom: 0px solid black;                                                      
     }
 
 }
