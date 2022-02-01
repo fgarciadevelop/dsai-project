@@ -21,6 +21,8 @@ import { MatFileUploadModule } from "angular-material-fileupload";
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DialogCreatePersonaComponent } from './components/dialog-create-persona/dialog-create-persona.component';
+import { VideoReplayComponent } from './components/video-replay/video-replay.component';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -42,7 +44,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatFileUploadModule,
       MatIconModule,
       MatProgressBarModule,
-
+      YouTubePlayerModule,
     ],
     declarations: [
       HeaderComponent,
@@ -52,6 +54,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       DialogFormCreateComponent,
       SpinnerComponent,
       DialogCreatePersonaComponent,
+      VideoReplayComponent,
     ],
     exports: [
       DialogFormCreateComponent,
@@ -74,6 +77,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatFileUploadModule,
       MatIconModule,
       MatProgressBarModule,
+      YouTubePlayerModule,
     ],
     providers: [{
         provide: PERFECT_SCROLLBAR_CONFIG,

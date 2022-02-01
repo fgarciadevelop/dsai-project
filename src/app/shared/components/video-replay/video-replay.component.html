@@ -1,0 +1,4 @@
+<app-spinner forceTo='component-sized' *ngIf="loading"></app-spinner>
+<div *ngIf="!loading">
+    <youtube-player [videoId]="id"></youtube-player>
+</div>

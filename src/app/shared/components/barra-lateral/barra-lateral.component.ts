@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DestacadoModel } from 'src/app/api-connect/models/destacado.model';
 import { TrailerModel } from 'src/app/api-connect/models/trailer.model';
 import { EspecialService } from 'src/app/api-connect/services/especial.service';
 import { EventosService } from 'src/app/api-connect/services/eventos.service';
+import { DialogCreatePersonaComponent } from '../dialog-create-persona/dialog-create-persona.component';
+import { VideoReplayComponent } from '../video-replay/video-replay.component';
 
 @Component({
   selector: 'app-barra-lateral',
@@ -12,6 +15,8 @@ import { EventosService } from 'src/app/api-connect/services/eventos.service';
 })
 export class BarraLateralComponent implements OnInit {
 
+  public dialogOpen: any;
+
   public destacados: DestacadoModel[] = [];
   public trailers: TrailerModel[] = [];
   public baseURL = "http://localhost:8080";
@@ -19,6 +24,7 @@ export class BarraLateralComponent implements OnInit {
   constructor(
     private especialService: EspecialService,
     private router: Router,
+    private dialogVideo: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +47,14 @@ export class BarraLateralComponent implements OnInit {
   viewTrailer(trailer: TrailerModel){
     console.log(trailer)
     //open modal youtube vision
+    this.dialogOpen = this.dialogVideo.open(VideoReplayComponent,{
+      data:{
+        src: trailer.url
+      }  
+    })
+    this.dialogOpen.afterClosed().subscribe((res: any) => {
+      console.log('Cerrado', res);
+    });
   }
 
 }
