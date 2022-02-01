@@ -14,6 +14,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ActorCardComponent } from './actor-card/actor-card.component';
 import { TrailersComponent } from './trailers/trailers.component';
+import { RecomendacionesComponent } from './recomendaciones/recomendaciones.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { TrailersComponent } from './trailers/trailers.component';
         PerfilComponent,
         ActorCardComponent,
         TrailersComponent,
+        RecomendacionesComponent,
     ],
     imports: [
         GlobalModule,
