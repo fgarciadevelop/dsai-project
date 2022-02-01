@@ -13,12 +13,8 @@
     <div class="container-trailers">
         <h1>Trailers</h1>
         <perfect-scrollbar>
-            <div *ngFor="let trailer of trailers">
-                <mat-card (click)="viewTrailer(trailer)">
-                    <img mat-card-image [src]="baseURL + trailer.imgURL">
-                    <mat-card-title>{{trailer.title}}</mat-card-title>
-                </mat-card>
-            </div>
+            <app-trailers-card [trailer]="trailer" *ngFor="let trailer of trailers"></app-trailers-card>
         </perfect-scrollbar>
     </div>
 </div>
+

@@ -24,6 +24,7 @@ import { DialogCreatePersonaComponent } from './components/dialog-create-persona
 import { VideoReplayComponent } from './components/video-replay/video-replay.component';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { ToastrModule } from "ngx-toastr";
+import { TrailersCardComponent } from './components/trailers-card/trailers-card.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -57,6 +58,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       SpinnerComponent,
       DialogCreatePersonaComponent,
       VideoReplayComponent,
+      TrailersCardComponent,
     ],
     exports: [
       DialogFormCreateComponent,
