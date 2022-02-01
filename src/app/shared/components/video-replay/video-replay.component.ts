@@ -29,7 +29,7 @@ export class VideoReplayComponent implements OnInit {
   }
 
   public loadVideo(){
-    this.id = this.data.src.split('/')[3];
+    this.processId();
     if(this.id == ''){
       this.toastr.clear();
       this.toastr.error('La url del vídeo es incorrecta.', 'Error cargando trailer' );
@@ -40,6 +40,15 @@ export class VideoReplayComponent implements OnInit {
       document.body.appendChild(tag);
     }
     this.loading = false;
+  }
+
+  public processId(){
+    let idSplitted = this.data.src.split('/')[3];
+    if(idSplitted.includes('watch?')){
+      this.id = idSplitted.split('v=')[1];
+    }else{
+      this.id = idSplitted;
+    }
   }
 
 }
