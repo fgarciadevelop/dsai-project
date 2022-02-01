@@ -19,6 +19,8 @@ export class MenuComponent implements OnInit {
   public userLoggedName: string = 'Inicia sesión';
   public userLogged: boolean = false;
 
+  public collapsed: boolean = true;
+
   constructor(
     private eventService: EventosService,
     private auth: AuthService,
@@ -41,6 +43,10 @@ export class MenuComponent implements OnInit {
     }else{
       this.router.navigateByUrl('perfil');
     }
+  }
+
+  public toggleCollapsed(){
+    this.collapsed = !this.collapsed;
   }
 
 }
